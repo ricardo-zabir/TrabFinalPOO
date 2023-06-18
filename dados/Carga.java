@@ -3,17 +3,27 @@ package dados;
 public class Carga {
 
     private int identificador;
+    private int portoOrigem;
+    private int portoDestino;
+    private Cliente codigo;
     private int peso;
     private Double valorDeclarado;
     private int tempoMaximo;
     private String situacao;
+    private TipoCarga numero;
+    private String prioridade;
 
-    public Carga(int identificador, int peso, Double valorDeclarado, int tempoMaximo, String situacao) {
+    public Carga(int identificador, int portoOrigem, int portoDestino, Cliente codigo, int peso, Double valorDeclarado, int tempoMaximo, String situacao, TipoCarga numero, String prioridade) {
         this.identificador = identificador;
+        this.portoOrigem = portoOrigem;
+        this.portoDestino = portoDestino;
+        this.codigo = codigo;
         this.peso = peso;
         this.valorDeclarado = valorDeclarado;
         this.tempoMaximo = tempoMaximo;
         this.situacao = situacao;
+        this.numero = numero;
+        this.prioridade = prioridade;
     }
 
     public int getIdentificador() {
@@ -22,6 +32,30 @@ public class Carga {
 
     public void setIdentificador(int identificador) {
         this.identificador = identificador;
+    }
+
+    public int getPortoOrigem() {
+        return portoOrigem;
+    }
+
+    public void setPortoOrigem(int portoOrigem) {
+        this.portoOrigem = portoOrigem;
+    }
+
+    public int getPortoDestino() {
+        return portoDestino;
+    }
+
+    public void setPortoDestino(int portoDestino) {
+        this.portoDestino = portoDestino;
+    }
+
+    public Cliente getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Cliente codigo) {
+        this.codigo = codigo;
     }
 
     public int getPeso() {
@@ -48,11 +82,27 @@ public class Carga {
         this.tempoMaximo = tempoMaximo;
     }
 
-    public String getSituacao(){
+    public String getSituacao() {
         return situacao;
     }
 
-    public void setSituacao(String situacao){
+    public void setSituacao(String situacao) {
         this.situacao = situacao;
+    }
+
+    public TipoCarga getNumero() {
+        return numero;
+    }
+
+    public void setNumero(TipoCarga numero) {
+        this.numero = numero;
+    }
+
+    public String getPrioridade() {
+        return prioridade;
+    }
+
+    public void setPrioridade(String prioridade) {
+        this.prioridade = prioridade;
     }
 }

@@ -59,18 +59,18 @@ public class SistemaPorto {
         }
     }
 
-    public void cadastrarCarga(int identificador, int peso, Double valorDeclarado, int tempoMaximo, String situacao){
-        // Verifica se a carga já está cadastrado
-        for(Carga carga: cargas){
-            if(carga.getIdentificador() == identificador){
-                System.out.println("Erro: Carga com o identificador indicado já cadastrado.");
+    public void cadastrarCarga(int identificador, int portoOrigem, int portoDestino, Cliente cliente, int peso, Double valorDeclarado, int tempoMaximo, String situacao, TipoCarga tipoCarga, String prioridade) {
+        // Verifica se a carga já está cadastrada
+        for (Carga carga : cargas) {
+            if (carga.getIdentificador() == identificador) {
+                System.out.println("Erro: Carga com o identificador indicado já cadastrada.");
                 return;
             }
         }
 
-         Carga novaCarga = new Carga(identificador, peso, valorDeclarado, tempoMaximo, "PENDENTE");
+        Carga novaCarga = new Carga(identificador, portoOrigem, portoDestino, cliente, peso, valorDeclarado, tempoMaximo, situacao, tipoCarga, prioridade);
 
-        // Encontra a posição onde o porto deve ser inserido para manter a ordem crescente de identificador
+        // Encontra a posição onde a carga deve ser inserida para manter a ordem crescente de identificador
         int posicaoInsercao = 0;
         while (posicaoInsercao < cargas.size() && cargas.get(posicaoInsercao).getIdentificador() < identificador) {
             posicaoInsercao++;
@@ -78,6 +78,19 @@ public class SistemaPorto {
 
         // Insere a carga na posição correta
         cargas.add(posicaoInsercao, novaCarga);
+
+        // Mostra os dados da nova carga cadastrada
+        System.out.println("Nova carga cadastrada com sucesso:");
+        System.out.println("Código: " + novaCarga.getIdentificador());
+        System.out.println("Cliente: " + novaCarga.getCodigo().getCodigo());
+        System.out.println("Origem: " + novaCarga.getPortoOrigem());
+        System.out.println("Destino: " + novaCarga.getPortoDestino());
+        System.out.println("Peso: " + novaCarga.getPeso());
+        System.out.println("Valor Declarado: " + novaCarga.getValorDeclarado());
+        System.out.println("Tempo Máximo: " + novaCarga.getTempoMaximo());
+        System.out.println("Tipo de Carga: " + novaCarga.getNumero().getDescricao());
+        System.out.println("Prioridade: " + novaCarga.getPrioridade());
+        System.out.println("Situação: " + novaCarga.getSituacao());
     }
 
     public void mostrarCargas() {
@@ -88,9 +101,15 @@ public class SistemaPorto {
             for (Carga carga : cargas) {
                 System.out.println("-----------------------------------");
                 System.out.println("Identificador: " + carga.getIdentificador());
+                System.out.println("Cliente: " + carga.getCodigo().getCodigo());
+                System.out.println("Origem: " + carga.getPortoOrigem());
+                System.out.println("Destino: " + carga.getPortoDestino());
                 System.out.println("Peso: " + carga.getPeso());
                 System.out.println("Valor Declarado: " + carga.getValorDeclarado());
                 System.out.println("Tempo Máximo: " + carga.getTempoMaximo());
+                System.out.println("Tipo de Carga: " + carga.getNumero().getDescricao());
+                System.out.println("Prioridade: " + carga.getPrioridade());
+                System.out.println("Situação: " + carga.getSituacao());
             }
         }
     }
