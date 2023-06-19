@@ -68,7 +68,7 @@ public class SistemaPorto {
             }
         }
 
-        Carga novaCarga = new Carga(identificador, portoOrigem, portoDestino, cliente, peso, valorDeclarado, tempoMaximo, situacao, tipoCarga, prioridade);
+        Carga novaCarga = new Carga(identificador, portoOrigem, portoDestino, cliente, peso, valorDeclarado, tempoMaximo, situacao = "PENDENTE", tipoCarga, prioridade);
 
         // Encontra a posição onde a carga deve ser inserida para manter a ordem crescente de identificador
         int posicaoInsercao = 0;
@@ -93,6 +93,10 @@ public class SistemaPorto {
         System.out.println("Situação: " + novaCarga.getSituacao());
     }
 
+    public void designarNavio(){
+
+    }
+
     public void mostrarCargas() {
         if (cargas.isEmpty()) {
             System.out.println("Não há cargas cadastradas.");
@@ -113,6 +117,44 @@ public class SistemaPorto {
         }
     }
 
+    public void alterarSituacaoCarga(int codigoCarga, String novaSituacao) {
+        // Procura a carga com o código indicado
+        Carga carga = null;
+        for (Carga c : cargas) {
+            if (c.getIdentificador() == codigoCarga) {
+                carga = c;
+                break;
+            }
+        }
+
+        // Verifica se a carga foi encontrada
+        if (carga == null) {
+            System.out.println("Erro: Não há carga com o código indicado.");
+            return;
+        }
+
+        // Verifica se a carga está na situação FINALIZADO
+        if (carga.getSituacao().equals("FINALIZADO")) {
+            System.out.println("Erro: A carga já está na situação FINALIZADO e não pode ser alterada.");
+            return;
+        }
+
+        // Atualiza a situação da carga
+        carga.setSituacao(novaSituacao);
+
+        // Mostra os dados atualizados da carga
+        System.out.println("Situação da carga " + carga.getIdentificador() + " alterada com sucesso:");
+        System.out.println("Cliente: " + carga.getCodigo().getCodigo());
+        System.out.println("Origem: " + carga.getPortoOrigem());
+        System.out.println("Destino: " + carga.getPortoDestino());
+        System.out.println("Peso: " + carga.getPeso());
+        System.out.println("Valor Declarado: " + carga.getValorDeclarado());
+        System.out.println("Tempo Máximo: " + carga.getTempoMaximo());
+        System.out.println("Tipo de Carga: " + carga.getNumero().getDescricao());
+        System.out.println("Prioridade: " + carga.getPrioridade());
+        System.out.println("Nova Situação: " + carga.getSituacao());
+    }
+
     public boolean verificarIdExistente(int id) {
         for (Porto porto : portos) {
             if (porto.getId() == id) {
@@ -120,18 +162,6 @@ public class SistemaPorto {
             }
         }
         return false;
-    }
-
-    private void setLocado(){
-        //this.situacao = "Locado";
-    }
-
-    private void setCancelado(){
-        //this.situacao = "Cancelado";
-    }
-
-    private void setFinalizado(){
-        //this.situacao = "Finalizado";
     }
 }
 
