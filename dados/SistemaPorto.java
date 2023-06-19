@@ -109,7 +109,6 @@ public class SistemaPorto {
                 System.out.println("Tempo Máximo: " + carga.getTempoMaximo());
                 System.out.println("Tipo de Carga: " + carga.getNumero().getDescricao());
                 System.out.println("Prioridade: " + carga.getPrioridade());
-                System.out.println("Situação: " + carga.getSituacao());
             }
         }
     }

@@ -13,7 +13,7 @@ de código).
 - [x] Cadastrar novo tipo de carga (solicita os dados de um tipo da carga, dependendo se
 é perecível ou durável [se o número já existir, mostra uma mensagem de erro]. Os tipos
 de carga são mantidos em ordem crescente de número).
-- [ ] Cadastrar nova carga (solicita os dados de uma carga [se o código já existir, mostra
+- [x] Cadastrar nova carga (solicita os dados de uma carga [se o código já existir, mostra
 uma mensagem de erro]; coloca a nova carga em uma fila de cargas pendentes; ao
 final mostra na tela os dados da nova carga cadastrada, incluindo os dados da origem
 e destino, cliente e tipo de carga. As cargas são mantidas em ordem crescente de
