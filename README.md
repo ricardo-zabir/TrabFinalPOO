@@ -13,7 +13,7 @@ de código).
 - [x] Cadastrar novo tipo de carga (solicita os dados de um tipo da carga, dependendo se
 é perecível ou durável [se o número já existir, mostra uma mensagem de erro]. Os tipos
 de carga são mantidos em ordem crescente de número).
-- [ ] Cadastrar nova carga (solicita os dados de uma carga [se o código já existir, mostra
+- [x] Cadastrar nova carga (solicita os dados de uma carga [se o código já existir, mostra
 uma mensagem de erro]; coloca a nova carga em uma fila de cargas pendentes; ao
 final mostra na tela os dados da nova carga cadastrada, incluindo os dados da origem
 e destino, cliente e tipo de carga. As cargas são mantidas em ordem crescente de
@@ -22,7 +22,7 @@ código).
 cargas, incluindo os dados dos portos de origem e destino, do cliente, do tipo de carga
 e da situação; se a carga possui um navio designado, mostra os dados do navio e o
 valor final do frete [se não há cargas, mostra uma mensagem de erro]).
-- [ ] Alterar a situação de uma carga (solicita o código de uma carga; mostra os dados da
+- [x] Alterar a situação de uma carga (solicita o código de uma carga; mostra os dados da
 carga; solicita a nova situação [se não há carga com o código indicado, mostra uma
 mensagem de erro; se a carga estiver na situação FINALIZADO, não pode ser alterado
 e mostra uma mensagem de erro]).
@@ -31,7 +31,7 @@ dos arquivos para o sistema; as cargas devem ser carregadas em uma fila de carga
 pendentes; ao final da carga de dados, mostra todos os dados de portos, navios,
 clientes, cargas [se houver problemas na carga de dados, mostra uma mensagem de
 erro]). Veja o Apêndice sobre os formatos dos arquivos de entrada.
-- [ ] Fretar cargas (a partir da fila de cargas pendentes; verifica se é possível designar
+- [x ] Fretar cargas (a partir da fila de cargas pendentes; verifica se é possível designar
 algum navio disponível para cada carga, e atualiza a sua situação. Se há algum navio
 com capacidade de fazer o frete, mas já está designado para outra carga, a carga
 retorna para a fila de fretes pendentes. Se não há nenhum navio com capacidade de 

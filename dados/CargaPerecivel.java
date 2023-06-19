@@ -1,4 +1,4 @@
-package dados;
+package dados; //sdadsad
 
 public class CargaPerecivel extends TipoCarga{
     private String origem;
