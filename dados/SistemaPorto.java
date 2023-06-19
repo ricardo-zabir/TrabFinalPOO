@@ -2,18 +2,16 @@ package dados;
 
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 public class SistemaPorto {
 
     private ArrayList<Porto> portos;
     private ArrayList<Carga> cargas;
-    private ArrayList<TipoCarga> tipoCargas;
+    private ArrayList<Navio> navios;
 
     public SistemaPorto() {
         portos = new ArrayList<>();
         cargas = new ArrayList<>();
-        tipoCargas = new ArrayList<>();
+        navios = new ArrayList<>();
     }
 
     public void cadastrarPorto(int id, String nome, String pais) {
@@ -59,6 +57,7 @@ public class SistemaPorto {
         }
     }
 
+    // Metodo •	Cadastrar nova carga (FEITO)
     public void cadastrarCarga(int identificador, int portoOrigem, int portoDestino, Cliente cliente, int peso, Double valorDeclarado, int tempoMaximo, String situacao, TipoCarga tipoCarga, String prioridade) {
         // Verifica se a carga já está cadastrada
         for (Carga carga : cargas) {
@@ -93,10 +92,7 @@ public class SistemaPorto {
         System.out.println("Situação: " + novaCarga.getSituacao());
     }
 
-    public void designarNavio(){
-
-    }
-
+    // Metodo •	Consultar todas as cargas (FALTA)
     public void mostrarCargas() {
         if (cargas.isEmpty()) {
             System.out.println("Não há cargas cadastradas.");
@@ -117,6 +113,7 @@ public class SistemaPorto {
         }
     }
 
+    // Metodo •	Alterar a situação de uma carga (FEITO)
     public void alterarSituacaoCarga(int codigoCarga, String novaSituacao) {
         // Procura a carga com o código indicado
         Carga carga = null;
@@ -153,6 +150,33 @@ public class SistemaPorto {
         System.out.println("Tipo de Carga: " + carga.getNumero().getDescricao());
         System.out.println("Prioridade: " + carga.getPrioridade());
         System.out.println("Nova Situação: " + carga.getSituacao());
+    }
+
+    // Metodo •	Fretar cargas (FEITO)
+    public void fretarCargas() {
+    if (cargas.isEmpty()) {
+        System.out.println("Erro: Não há cargas na fila de cargas pendentes.");
+        return;
+    }
+
+    for (Carga carga : cargas) {
+        if (carga.getSituacao().equals("PENDENTE")) {
+            boolean cargaFretada = false;
+
+            for (Navio navio : navios) {
+                if (carga.getPeso() <= navio.getCapacidade() && navio.getStatus().equals("LIBERADO")) {
+                    navio.setStatus("OCUPADO");
+                    carga.setSituacao("LOCADO");
+                    cargaFretada = true;
+                    break;
+                }
+            }   if (!cargaFretada) {
+                    carga.setSituacao("CANCELADO");
+                } else {
+                    break;
+                }
+            }
+        }
     }
 
     public boolean verificarIdExistente(int id) {

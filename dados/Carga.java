@@ -30,16 +30,8 @@ public class Carga {
         return identificador;
     }
 
-    public void setIdentificador(int identificador) {
-        this.identificador = identificador;
-    }
-
     public int getPortoOrigem() {
         return portoOrigem;
-    }
-
-    public void setPortoOrigem(int portoOrigem) {
-        this.portoOrigem = portoOrigem;
     }
 
     public int getPortoDestino() {
@@ -52,10 +44,6 @@ public class Carga {
 
     public Cliente getCodigo() {
         return codigo;
-    }
-
-    public void setCodigo(Cliente codigo) {
-        this.codigo = codigo;
     }
 
     public int getPeso() {
@@ -94,10 +82,6 @@ public class Carga {
         return numero;
     }
 
-    public void setNumero(TipoCarga numero) {
-        this.numero = numero;
-    }
-
     public String getPrioridade() {
         return prioridade;
     }
@@ -105,4 +89,5 @@ public class Carga {
     public void setPrioridade(String prioridade) {
         this.prioridade = prioridade;
     }
+
 }

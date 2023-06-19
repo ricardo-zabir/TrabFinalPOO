@@ -1,4 +1,4 @@
-package dados;
+package dados; //sdadsda
 
 public class CargaDuravel extends TipoCarga{
     private String setor;
