@@ -9,6 +9,7 @@ public class AlterarCarga extends JFrame{
     private JTextField codigoSolicitadoField;
     private JButton botaoFinal;
     private JButton botaoConfirma;
+    private JLabel mensagem;
 
     public AlterarCarga() {
         super();

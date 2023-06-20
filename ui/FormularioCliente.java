@@ -2,6 +2,8 @@ package ui;
 import javax.swing.*;
 
 import dados.Cliente;
+import ui.FormularioCliente;
+
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -118,21 +120,15 @@ public class FormularioCliente extends JFrame {
         painel.add(formTitle);
         painel.add(painelCampos);
         FlowLayout botaoLayout = new FlowLayout(FlowLayout.RIGHT);
-        FlowLayout botaoLimparLayout = new FlowLayout(FlowLayout.LEFT);
-        FlowLayout botaoFecharLayout = new FlowLayout(FlowLayout.CENTER);
         JPanel botaoPainel = new JPanel(botaoLayout);
-        JPanel botaoLimparPainel = new JPanel(botaoLimparLayout);
-        JPanel botaoFecharPainel = new JPanel(botaoFecharLayout);
         botaoPainel.add(botao);
-        botaoFecharPainel.add(fecharBotao);
-        botaoLimparPainel.add(limparBotao);
+        botaoPainel.add(fecharBotao);
+        botaoPainel.add(limparBotao);
         painel.add(botaoPainel);
-        painel.add(botaoLimparPainel);
-        painel.add(botaoFecharPainel);
         painel.add(mensagem);
         this.setTitle("Formulario - Cliente");
         this.add(painel);
-        this.setSize(900,500);
+        this.setSize(700,400);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
     }

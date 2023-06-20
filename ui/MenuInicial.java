@@ -17,12 +17,12 @@ import java.awt.event.ActionListener;
     private JButton botaoFretarCarga;
     private JButton botaoFINAL;
     private JButton botaoSalvarDados;
-    private JLabel mensagem;
+    private JButton botaoCarregarDadosInicias;
 
     public MenuInicial() {
         super();
 
-        JLabel formTitle = new JLabel("ACMEHandelsschifffahrtsgesellschaft");
+        JLabel formTitle = new JLabel("Menu Inicial");
         formTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
         
         botaoCadastroNavio = new JButton("Cadastrar Navio");
@@ -35,8 +35,8 @@ import java.awt.event.ActionListener;
         botaoCarregarDados = new JButton("Carregar Dados");
         botaoFretarCarga = new JButton("Fretar Carga");
         botaoSalvarDados = new JButton("Salvar Dados");
+        botaoCarregarDadosInicias = new JButton("Carregar Dados Iniciais");
         botaoFINAL = new JButton("Finalizar");
-        mensagem = new JLabel();
 
         GridLayout grid = new GridLayout(6, 4);
         JPanel painel = new JPanel(grid);
@@ -53,9 +53,9 @@ import java.awt.event.ActionListener;
         botaoPainel.add(botaoCarregarDados);
         botaoPainel.add(botaoFretarCarga);
         botaoPainel.add(botaoSalvarDados);
+        botaoPainel.add(botaoCarregarDadosInicias);
         botaoPainel.add(botaoFINAL);
         painel.add(botaoPainel);
-        painel.add(mensagem);
 
         this.setTitle("ACMEHandelsschifffahrtsgesellschaft");
         this.add(painel);
@@ -65,6 +65,16 @@ import java.awt.event.ActionListener;
         
         // Tratamento de eventos
         TratadorEventos tratadorEventos = new TratadorEventos();
+        botaoCadastroPorto.addActionListener(tratadorEventos);
+        botaoCadastroNavio.addActionListener(tratadorEventos);
+        botaoCadastroCliente.addActionListener(tratadorEventos);
+        botaoCadastroCarga.addActionListener(tratadorEventos);
+        botaoCadastroTipoCarga.addActionListener(tratadorEventos);
+        botaoConsultaCarga.addActionListener(tratadorEventos);
+        botaoAlterarCarga.addActionListener(tratadorEventos);
+        botaoFretarCarga.addActionListener(tratadorEventos);
+        botaoSalvarDados.addActionListener(tratadorEventos);
+        botaoCarregarDadosInicias.addActionListener(tratadorEventos);
         botaoFINAL.addActionListener(tratadorEventos);
     }
     
@@ -75,24 +85,28 @@ import java.awt.event.ActionListener;
         {
             if(e.getSource() == botaoCadastroPorto)
             {
-                
+                FormularioPorto formularioPorto = new FormularioPorto();
+                formularioPorto.setVisible(true);
             }
             else if(e.getSource() == botaoCadastroNavio)
             {
-                FormularioNavio cadastroNavio = new FormularioNavio();
-                cadastroNavio.setVisible(true);
+                FormularioNavio formularioNavio = new FormularioNavio();
+                formularioNavio.setVisible(true);
             }
             else if(e.getSource() == botaoCadastroCliente)
             {
-              
+                FormularioCliente formularioCliente = new FormularioCliente();
+                formularioCliente.setVisible(true);
             }
             else if(e.getSource() == botaoCadastroCarga)
             {
-              
+                FormularioCarga formularioCarga = new FormularioCarga();
+                formularioCarga.setVisible(true);
             }
             else if(e.getSource() == botaoCadastroTipoCarga)
             {
-              
+              FormularioTipoCarga formularioTipoCarga = new FormularioTipoCarga();
+              formularioTipoCarga.setVisible(true);
             }
             else if(e.getSource() == botaoConsultaCarga)
             {
@@ -100,7 +114,8 @@ import java.awt.event.ActionListener;
             }
             else if(e.getSource() == botaoAlterarCarga)
             {
-              
+              AlterarCarga alterarCarga = new AlterarCarga();
+              alterarCarga.setVisible(true);
             }
             else if(e.getSource() == botaoCarregarDados)
             {
@@ -114,10 +129,20 @@ import java.awt.event.ActionListener;
             {
               
             }
+            else if(e.getSource() == botaoCarregarDadosInicias)
+            {
+                CarregarDadosIniciais carregarDadosIniciais = new CarregarDadosIniciais();
+                carregarDadosIniciais.setVisible(true);
+            }
             else if(e.getSource() == botaoFINAL)
             {
               dispose();
             }
         }
     }
+
+    public static void main(String[] args) {
+        MenuInicial janela = new MenuInicial();
+        }
+    
 }
