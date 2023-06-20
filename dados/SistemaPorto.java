@@ -7,11 +7,45 @@ public class SistemaPorto {
     private ArrayList<Porto> portos;
     private ArrayList<Carga> cargas;
     private ArrayList<Navio> navios;
+    private ArrayList<Cliente> clientes;
+    private ArrayList<TipoCarga> tipoCargas;
+    private ArrayList<Distancia> distancias;
 
     public SistemaPorto() {
         portos = new ArrayList<>();
         cargas = new ArrayList<>();
         navios = new ArrayList<>();
+        clientes = new ArrayList<>();
+        tipoCargas = new ArrayList<>();
+        distancias = new ArrayList<>();
+    }
+
+    public void cadastrarDistancia (int codOrigem, int codDestino, double distancia) {
+        this.distancias.add(new Distancia(codOrigem, codDestino, distancia));
+    }
+
+    public void cadastrarNavio(String nome, double velocidade, double autonomia, double customilhabasico) {
+        this.navios.add(new Navio(nome, velocidade, autonomia, customilhabasico, 0, ""));
+    }
+
+    public void cadastrarCliente(int codigo, String nome, String email ) {
+        this.clientes.add(new Cliente(nome, codigo, email));
+    }
+
+    public void cadastrarTipoCarga(TipoCarga tc) {
+        this.tipoCargas.add(tc);
+    }
+
+    public ArrayList<Cliente> getClientes() {
+        return clientes;
+    }
+
+    public ArrayList<Carga> getCargas() {
+        return cargas;
+    }
+
+    public ArrayList<TipoCarga> getTiposCargas() {
+        return tipoCargas;
     }
 
     public void cadastrarPorto(int id, String nome, String pais) {
@@ -42,6 +76,10 @@ public class SistemaPorto {
         }
     }
     
+    public ArrayList<Porto> getPortos() {
+        return portos;
+    }
+    
     public void mostrarPortos() {
         if (portos.isEmpty()) {
             System.out.println("Não há portos cadastrados.");
@@ -55,6 +93,10 @@ public class SistemaPorto {
                 System.out.println("Distância: " + porto.getDistancia() + " milhas náuticas");
             }
         }
+    }
+
+    public ArrayList<Navio> getNavios() {
+        return navios;
     }
 
     // Metodo •	Cadastrar nova carga (FEITO)

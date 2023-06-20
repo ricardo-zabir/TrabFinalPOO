@@ -2,11 +2,12 @@
 //import ui.FormularioTipoCarga;
 //import ui.FormularioNavio;
 //import ui.FormularioPorto;
+import ui.CarregarDadosIniciais;
 import ui.FormularioPrincipal;
 
 public class Main {
     public static void main(String[] args) {
-        new FormularioPrincipal();
+        new CarregarDadosIniciais();
         //new FormularioTipoCarga();
         //new FormularioCliente();
         //new FormularioNavio();
