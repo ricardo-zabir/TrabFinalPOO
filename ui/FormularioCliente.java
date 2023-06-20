@@ -70,7 +70,7 @@ public class FormularioCliente extends JFrame {
                         throw new IllegalArgumentException();
                     } 
                 if (exists.equals("")) {
-                    clientes.add(new Cliente(nomeField.getText(),Integer.parseInt(codigoField.getText()) , emailField.getText()));
+                    clientes.add(new Cliente(Integer.parseInt(codigoField.getText()), nomeField.getText(), emailField.getText()));
                     List<Cliente> clientesList = new ArrayList<>(clientes);
                     Collections.sort(clientesList, Comparator.comparing(Cliente::getCodigo));
                     HashSet<Cliente> clientesSorted = new HashSet<>(clientesList);
