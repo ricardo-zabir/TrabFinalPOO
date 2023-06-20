@@ -8,6 +8,7 @@ public class Navio{
     private double custoPorMilhaBasico;
     private double capacidade;
     private String status;
+    private Carga carga;
     
     public Navio(String nome, double velocidade, double autonomia, double custoPorMilhaBasico, double capacidade, String status){
         this.nome = nome;
@@ -16,6 +17,7 @@ public class Navio{
         this.custoPorMilhaBasico = custoPorMilhaBasico;
         this.capacidade = capacidade;
         this.status = status;
+        this.carga = null;
     }
     
     // Getters and setters for the class properties
@@ -62,5 +64,9 @@ public class Navio{
 
     public void setStatus(String status){
         this.status = status;
+    }
+
+    public void setCarga (Carga carga) {
+        this.carga = carga;
     }
 }

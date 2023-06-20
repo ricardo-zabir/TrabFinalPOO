@@ -246,6 +246,7 @@ public class SistemaPorto {
                     if (carga.getPeso() <= navio.getCapacidade() && navio.getStatus().equals("LIBERADO")) {
                         navio.setStatus("OCUPADO");
                         carga.setSituacao("LOCADO");
+                        carga.setFrete(navio, portos, distancias);
                         cargaFretada = true;
                         break;
                     }
