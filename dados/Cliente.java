@@ -2,36 +2,36 @@ package dados;
 
 public class Cliente {
 
-    private String nome;
     private int codigo;
+    private String nome;
     private String email;
 
-    public Cliente(String nome, int codigo, String email) {
-        this.nome = nome;
+    public Cliente( int codigo, String nome, String email) {
         this.codigo = codigo;
+        this.nome = nome;
         this.email = email;
     }
 
     // Getters and setters for the class properties
 
-    public String getNome() {
-        return nome;
-    }
-
     public int getCodigo() {
         return codigo;
+    }
+
+    public String getNome() {
+        return nome;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public void setCodigo(int codigo) {
         this.codigo = codigo;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public void setEmail(String email) {

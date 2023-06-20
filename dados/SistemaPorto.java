@@ -20,32 +20,28 @@ public class SistemaPorto {
         distancias = new ArrayList<>();
     }
 
-    public void cadastrarDistancia (int codOrigem, int codDestino, double distancia) {
-        this.distancias.add(new Distancia(codOrigem, codDestino, distancia));
-    }
-
-    public void cadastrarNavio(String nome, double velocidade, double autonomia, double customilhabasico) {
-        this.navios.add(new Navio(nome, velocidade, autonomia, customilhabasico, 0, ""));
-    }
-
-    public void cadastrarCliente(int codigo, String nome, String email ) {
-        this.clientes.add(new Cliente(nome, codigo, email));
-    }
-
-    public void cadastrarTipoCarga(TipoCarga tc) {
-        this.tipoCargas.add(tc);
-    }
-
-    public ArrayList<Cliente> getClientes() {
-        return clientes;
+    public ArrayList<Porto> getPortos() {
+        return portos;
     }
 
     public ArrayList<Carga> getCargas() {
         return cargas;
     }
 
+    public ArrayList<Navio> getNavios() {
+        return navios;
+    }
+
+    public ArrayList<Cliente> getClientes() {
+        return clientes;
+    }
+
     public ArrayList<TipoCarga> getTiposCargas() {
         return tipoCargas;
+    }
+
+    public ArrayList<Distancia> geDistancias()  {
+        return distancias;
     }
 
     public void cadastrarPorto(int id, String nome, String pais) {
@@ -75,31 +71,7 @@ public class SistemaPorto {
             }
         }
     }
-    
-    public ArrayList<Porto> getPortos() {
-        return portos;
-    }
-    
-    public void mostrarPortos() {
-        if (portos.isEmpty()) {
-            System.out.println("Não há portos cadastrados.");
-        } else {
-            System.out.println("Lista de Portos:");
-            for (Porto porto : portos) {
-                System.out.println("-----------------------------------");
-                System.out.println("ID: " + porto.getId());
-                System.out.println("Nome: " + porto.getNome());
-                System.out.println("Pais: " + porto.getPais());
-                System.out.println("Distância: " + porto.getDistancia() + " milhas náuticas");
-            }
-        }
-    }
 
-    public ArrayList<Navio> getNavios() {
-        return navios;
-    }
-
-    // Metodo •	Cadastrar nova carga (FEITO)
     public void cadastrarCarga(int identificador, int portoOrigem, int portoDestino, Cliente cliente, int peso, Double valorDeclarado, int tempoMaximo, String situacao, TipoCarga tipoCarga, String prioridade) {
         // Verifica se a carga já está cadastrada
         for (Carga carga : cargas) {
@@ -134,6 +106,73 @@ public class SistemaPorto {
         System.out.println("Situação: " + novaCarga.getSituacao());
     }
 
+    public void cadastrarNavio(String nome, double velocidade, double autonomia, double custoMilhaBasico) {
+        // Verifica se o navio já está cadastrado
+        for (Navio navio : navios) {
+            if (navio.getNome().equals(nome)) {
+                System.out.println("Erro: Navio já está cadastrado com o nome indicado.");
+                return;
+            }
+        }
+
+        Navio novoNavio = new Navio(nome, velocidade, autonomia, custoMilhaBasico, 0, "");
+
+        // Encontra a posição onde o navio deve ser inserido para manter a ordem crescente de nome
+        int posicaoInsercao = 0;
+        while (posicaoInsercao < navios.size() && navios.get(posicaoInsercao).getNome().compareTo(nome) < 0) {
+            posicaoInsercao++;
+        }
+
+        // Insere o navio na posição correta
+        navios.add(posicaoInsercao, novoNavio);
+    }
+
+    public void cadastrarCliente(int codigo, String nome, String email) {
+        // Verifica se o cliente já está cadastrado
+        for (Cliente cliente : clientes) {
+            if (cliente.getCodigo() == codigo || cliente.getEmail().equals(email)) {
+                System.out.println("Erro: Cliente já cadastrado no sistema.");
+                return;
+            }
+        }
+
+        Cliente novoCliente = new Cliente(codigo, nome, email);
+
+        // Encontra a posição onde o cliente deve ser inserido para manter a ordem crescente de código
+        int posicaoInsercao = 0;
+        while (posicaoInsercao < clientes.size() && clientes.get(posicaoInsercao).getCodigo() < codigo) {
+            posicaoInsercao++;
+        }
+
+        // Insere o cliente na posição correta
+        clientes.add(posicaoInsercao, novoCliente);
+    }
+
+    public void cadastrarTipoCarga(TipoCarga tc) {
+        // Verifica se o tipo de carga já está cadastrado
+        for (TipoCarga tipo : tipoCargas) {
+            if (tipo.getNumero() == tc.getNumero()) {
+                System.out.println("Erro: Tipo de carga com o número indicado já cadastrado.");
+                return;
+            }
+        }
+
+        // Encontra a posição onde o tipo de carga deve ser inserido para manter a ordem crescente de número
+        int posicaoInsercao = 0;
+        while (posicaoInsercao < tipoCargas.size() && tipoCargas.get(posicaoInsercao).getNumero() < tc.getNumero()) {
+            posicaoInsercao++;
+        }
+
+        // Insere o tipo de carga na posição correta
+        tipoCargas.add(posicaoInsercao, tc);
+    }
+
+    public void cadastrarDistancia (int codOrigem, int codDestino, double distancia) {
+        this.distancias.add(new Distancia(codOrigem, codDestino, distancia));
+    }
+
+
+
     // Metodo •	Consultar todas as cargas (FALTA)
     public void mostrarCargas() {
         if (cargas.isEmpty()) {
@@ -155,7 +194,6 @@ public class SistemaPorto {
         }
     }
 
-    // Metodo •	Alterar a situação de uma carga (FEITO)
     public void alterarSituacaoCarga(int codigoCarga, String novaSituacao) {
         // Procura a carga com o código indicado
         Carga carga = null;
@@ -194,25 +232,26 @@ public class SistemaPorto {
         System.out.println("Nova Situação: " + carga.getSituacao());
     }
 
-    // Metodo •	Fretar cargas (FEITO)
     public void fretarCargas() {
-    if (cargas.isEmpty()) {
-        System.out.println("Erro: Não há cargas na fila de cargas pendentes.");
-        return;
-    }
+        if (cargas.isEmpty()) {
+            System.out.println("Erro: Não há cargas na fila de cargas pendentes.");
+            return;
+        }
 
-    for (Carga carga : cargas) {
-        if (carga.getSituacao().equals("PENDENTE")) {
-            boolean cargaFretada = false;
+        for (Carga carga : cargas) {
+            if (carga.getSituacao().equals("PENDENTE")) {
+                boolean cargaFretada = false;
 
-            for (Navio navio : navios) {
-                if (carga.getPeso() <= navio.getCapacidade() && navio.getStatus().equals("LIBERADO")) {
-                    navio.setStatus("OCUPADO");
-                    carga.setSituacao("LOCADO");
-                    cargaFretada = true;
-                    break;
+                for (Navio navio : navios) {
+                    if (carga.getPeso() <= navio.getCapacidade() && navio.getStatus().equals("LIBERADO")) {
+                        navio.setStatus("OCUPADO");
+                        carga.setSituacao("LOCADO");
+                        cargaFretada = true;
+                        break;
+                    }
                 }
-            }   if (!cargaFretada) {
+
+                if (!cargaFretada) {
                     carga.setSituacao("CANCELADO");
                 } else {
                     break;
