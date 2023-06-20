@@ -31,7 +31,7 @@ dos arquivos para o sistema; as cargas devem ser carregadas em uma fila de carga
 pendentes; ao final da carga de dados, mostra todos os dados de portos, navios,
 clientes, cargas [se houver problemas na carga de dados, mostra uma mensagem de
 erro]). Veja o Apêndice sobre os formatos dos arquivos de entrada.
-- [x ] Fretar cargas (a partir da fila de cargas pendentes; verifica se é possível designar
+- [x] Fretar cargas (a partir da fila de cargas pendentes; verifica se é possível designar
 algum navio disponível para cada carga, e atualiza a sua situação. Se há algum navio
 com capacidade de fazer o frete, mas já está designado para outra carga, a carga
 retorna para a fila de fretes pendentes. Se não há nenhum navio com capacidade de 
