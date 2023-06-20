@@ -260,6 +260,20 @@ public class SistemaPorto {
         }
     }
 
+    public void mostrarPortos() {
+        if (portos.isEmpty()) {
+            System.out.println("Não há portos cadastrados.");
+        } else {
+            System.out.println("Lista de Portos:");
+            for (Porto porto : portos) {
+                System.out.println("-----------------------------------");
+                System.out.println("ID: " + porto.getId());
+                System.out.println("Nome: " + porto.getNome());
+                System.out.println("País: " + porto.getPais());
+            }
+        }
+    }
+
     public boolean verificarIdExistente(int id) {
         for (Porto porto : portos) {
             if (porto.getId() == id) {
