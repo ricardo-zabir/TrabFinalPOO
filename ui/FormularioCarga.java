@@ -26,12 +26,15 @@ public class FormularioCarga extends JFrame{
     private JButton botaoLimpa;
     private JLabel mensagem;
 
+    private HashSet<Cliente> clientes;
+
     public FormularioCarga(){
         super();
 
         JLabel formTitle = new JLabel("Digite as informações da carga:");
         formTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
+        clientes = new HashSet<>();
         GridLayout gridCampos = new GridLayout(2, 2);
         JPanel painelCampos = new JPanel(gridCampos);
         JLabel identificadorLabel = new JLabel(" ");
@@ -132,10 +135,11 @@ public class FormularioCarga extends JFrame{
                     int tempoMaximo = Integer.parseInt(tempoMaximoField.getText());
                     String prioridade = prioridadeField.getText();
                     int codigo = Integer.parseInt(codigoClienteField.getText());
-                    Cliente cliente = FormularioCliente.checkCodigo(codigo, clientes);
+                    Cliente cliente = checkCodigo(codigo, clientes);
+
 
                     if (cliente != null) {
-                        SistemaPorto.cadastrarCarga(identificador, portoOrigem, portoDestino, codigo, peso, valorDeclarado, tempoMaximo, tipoCargaNumero, prioridade);
+                        SistemaPorto.cadastrarCarga(identificador, portoOrigem, portoDestino, codigo, peso, valorDeclarado, tempoMaximo, situacao, tipoCarga, prioridade);
                         mensagem.setForeground(Color.GREEN);
                         mensagem.setText("Carga cadastrada com sucesso");
                     } else {
@@ -151,5 +155,14 @@ public class FormularioCarga extends JFrame{
                 }
             }
         }
+    }
+
+        public static Cliente checkCodigo(int codigo, HashSet<Cliente> clientes) {
+        for (Cliente cliente : clientes) {
+            if (cliente.getCodigo() == codigo) {
+                return cliente;
+            }
+        }
+        return null; // Retorna null se o cliente não for encontrado
     }
 }
