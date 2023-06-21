@@ -106,7 +106,7 @@ import java.awt.event.ActionListener;
               formularioTipoCarga.setVisible(true);
             }
             else if (e.getSource() == botaoConsultaCarga) {
-                ConsultarCargas consultarCargas = new ConsultarCargas(sp);
+                ConsultarCarga consultarCargas = new ConsultarCarga(sp);
                 consultarCargas.setVisible(true);
             }
             else if(e.getSource() == botaoAlterarCarga)
