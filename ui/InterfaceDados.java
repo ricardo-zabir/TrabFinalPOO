@@ -103,7 +103,7 @@ public class InterfaceDados extends JFrame{
                     salvarArquivoTipoCarga(file, sp);
                     salvarArquivoDistancia(file, sp);
 
-                    mensagem.setForeground(Color.BLUE);
+                    mensagem.setForeground(Color.BLACK);
                     mensagem.setText("Salvamento concluido");
                 } catch (Exception er) {
                     mensagem.setForeground(Color.RED);
@@ -370,22 +370,6 @@ public class InterfaceDados extends JFrame{
         return "";
     }
 
-    public static String salvarDados(Scanner sc, SistemaPorto sp) {
-        System.out.print("Digite o nome do arquivo para salvar os dados (sem extensão): ");
-        String nomeArquivo = sc.next();
-        
-        try {
-            salvarArquivoPortos(nomeArquivo, sp);
-            salvarArquivoNavios(nomeArquivo, sp);
-            salvarArquivoClientes(nomeArquivo, sp);
-            salvarArquivoCargas(nomeArquivo, sp);
-        } catch (IOException e) {
-            return "ERRO: Problema ao salvar os dados. " + e.getMessage();
-        }
-
-        return "Dados salvos com sucesso no arquivo " + nomeArquivo + ".txt";
-    }
-
     // Metodos de salvar Arquivo.
 
     private static void salvarArquivoPortos(String nomeArquivo, SistemaPorto sp) throws IOException {
@@ -433,7 +417,8 @@ public class InterfaceDados extends JFrame{
 
     public static void salvarArquivoTipoCarga(String arquivo, SistemaPorto sp) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("TIPOSCARGAS.CSV"))) {
-            writer.write("numero;descrição;categoria;origem_setor;tempomaximo_material");
+            writer.write("numero;descricao;categoria;origem_setor;tempomaximo_material" + "\n");
+            
 
             for (TipoCarga tipoCarga : sp.getTiposCargas()) {
                 if (tipoCarga instanceof CargaPerecivel) {
@@ -458,7 +443,7 @@ public class InterfaceDados extends JFrame{
 
     public static void salvarArquivoDistancia(String arquivo, SistemaPorto sp) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("DISTANCIA.CSV"))) {
-            writer.write("origem;destino;distância" + System.lineSeparator());
+            writer.write("origem;destino;distancia" + System.lineSeparator());
 
             ArrayList<Distancia> distancias = sp.getDistancias();
 
@@ -467,7 +452,7 @@ public class InterfaceDados extends JFrame{
                 int destino = distancia.getDestino();
                 double valorDistancia = distancia.getDistancia();
 
-                writer.write(origem + ";" + destino + ";" + valorDistancia + System.lineSeparator() + "\n");
+                writer.write(origem + ";" + destino + ";" + valorDistancia + System.lineSeparator());
             }
         }
     }

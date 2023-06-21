@@ -1,5 +1,8 @@
 package dados;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class SistemaPorto {
@@ -125,6 +128,13 @@ public class SistemaPorto {
 
         // Insere o navio na posição correta
         navios.add(posicaoInsercao, novoNavio);
+
+        // Grava o navio no arquivo CSV
+        try (PrintWriter writer = new PrintWriter(new FileWriter("NAVIO.CSV", true))) {
+            writer.println(novoNavio.getNome() + ";" + novoNavio.getVelocidade() + ";" + novoNavio.getAutonomia() + ";" + novoNavio.getCustoPorMilhaBasico());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void cadastrarCliente(int codigo, String nome, String email) {
