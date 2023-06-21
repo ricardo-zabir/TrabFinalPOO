@@ -9,6 +9,9 @@ import dados.TipoCarga;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class FormularioCarga extends JFrame{
     private JTextField identificadorField;
@@ -103,10 +106,8 @@ public class FormularioCarga extends JFrame{
     class TratadorEventos implements ActionListener 
     {
         @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            if(e.getSource() == botaoLimpa)
-            {
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == botaoLimpa) {
                 identificadorField.setText("");
                 portoOrigemField.setText("");
                 portoDestinoField.setText("");
@@ -116,14 +117,10 @@ public class FormularioCarga extends JFrame{
                 tempoMaximoField.setText("");
                 tipoCargaNumeroField.setText("");
                 prioridadeField.setText("");
-            }
-            else if(e.getSource() == botaoFinal)
-            {
+            } else if (e.getSource() == botaoFinal) {
                 dispose();
-            }
-            else if(e.getSource() == botaoConfirma)
-            {
-               try {
+            } else if (e.getSource() == botaoConfirma) {
+                try {
                     int identificador = Integer.parseInt(identificadorField.getText());
                     int portoOrigem = Integer.parseInt(portoOrigemField.getText());
                     int portoDestino = Integer.parseInt(portoDestinoField.getText());
@@ -140,6 +137,18 @@ public class FormularioCarga extends JFrame{
                         sp.cadastrarCarga(identificador, portoOrigem, portoDestino, cliente, peso, valorDeclarado, tempoMaximo, "PENDENTE", tc, prioridade);
                         mensagem.setForeground(Color.GREEN);
                         mensagem.setText("Carga cadastrada com sucesso");
+
+                        // Escrever no arquivo "CARGAS.CSV"
+                        String linha = identificador + "," + portoOrigem + "," + portoDestino + "," + cliente.getCodigo() + ","
+                                + peso + "," + valorDeclarado + "," + tempoMaximo + "," + "PENDENTE" + "," + tc.getNumero() + ","
+                                + prioridade;
+
+                        try (BufferedWriter writer = new BufferedWriter(new FileWriter("CARGAS.CSV", true))) {
+                            writer.write(linha);
+                            writer.newLine();
+                        } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(null, "Erro ao escrever no arquivo.");
+                        }
                     } else {
                         mensagem.setForeground(Color.RED);
                         mensagem.setText("Erro, cliente não encontrado");
@@ -147,11 +156,10 @@ public class FormularioCarga extends JFrame{
                 } catch (IndexOutOfBoundsException iou) {
                     mensagem.setForeground(Color.RED);
                     mensagem.setText("Erro, tipo de carga ou cliente não encontrado");
-                }
-                 catch (NumberFormatException erro) {
+                } catch (NumberFormatException erro) {
                     mensagem.setForeground(Color.RED);
                     mensagem.setText("Erro, verifique os campos numéricos");
-                } catch (Exception erro) { 
+                } catch (Exception erro) {
                     mensagem.setForeground(Color.RED);
                     mensagem.setText("Erro, carga não foi cadastrada");
                 }

@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
  public class FormularioNavio extends JFrame {
@@ -81,43 +84,48 @@ import java.util.ArrayList;
     class TratadorEventos implements ActionListener 
     {
         @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            if(e.getSource() == botaoLIMPA)
-            {
-                nomeField.setText("");
-                velocidadeField.setText("");
-                autonomiaField.setText("");
-                custoMilhaField.setText("");
-            }
-            else if(e.getSource() == botaoFINAL)
-            {
-                dispose();
-            }
-            else if(e.getSource() == botaoCONFIRMA)
-            {
-                String nome = nomeField.getText();
-                try {
-                    double velocidade = Double.parseDouble(velocidadeField.getText());
-                    double autonomia = Double.parseDouble(autonomiaField.getText());
-                    double custoPorMilhaBasico = Double.parseDouble(custoMilhaField.getText());
-                    int capacidade = 0;
-                    String status = null;
-                    Navio navio = new Navio(nome, velocidade, autonomia, custoPorMilhaBasico, capacidade, status);
-                    if(CadastraNavio(navio)){
-                        mensagem.setForeground(Color.BLUE);
-                        mensagem.setText("Navio " + nome + " cadastrado com sucesso");
-                    }
-                    else{
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == botaoLIMPA) {
+                    nomeField.setText("");
+                    velocidadeField.setText("");
+                    autonomiaField.setText("");
+                    custoMilhaField.setText("");
+                } else if (e.getSource() == botaoFINAL) {
+                    dispose();
+                } else if (e.getSource() == botaoCONFIRMA) {
+                    String nome = nomeField.getText();
+                    try {
+                        double velocidade = Double.parseDouble(velocidadeField.getText());
+                        double autonomia = Double.parseDouble(autonomiaField.getText());
+                        double custoPorMilhaBasico = Double.parseDouble(custoMilhaField.getText());
+                        int capacidade = 0;
+                        String status = null;
+                        Navio navio = new Navio(nome, velocidade, autonomia, custoPorMilhaBasico, capacidade, status);
+                        if (CadastraNavio(navio)) {
+                            mensagem.setForeground(Color.BLUE);
+                            mensagem.setText("Navio " + nome + " cadastrado com sucesso");
+
+                            // Escrever no arquivo "NAVIO.CSV"
+                            String linha = navio.getNome() + "," + navio.getVelocidade() + "," + navio.getAutonomia()
+                                    + "," + navio.getCustoPorMilhaBasico();
+
+                            try (BufferedWriter writer = new BufferedWriter(new FileWriter("NAVIO.CSV", true))) {
+                                writer.write(linha);
+                                writer.newLine();
+                            } catch (IOException ex) {
+                                JOptionPane.showMessageDialog(null, "Erro ao escrever no arquivo.");
+                            }
+
+                        } else {
+                            mensagem.setForeground(Color.RED);
+                            mensagem.setText("Erro, navio " + nome + " não foi cadastrado, pois já existe um navio com este nome.");
+                        }
+                    } catch (NumberFormatException er) {
                         mensagem.setForeground(Color.RED);
-                        mensagem.setText("Erro, navio " + nome + " não foi cadastrado, pois já exite um navio com este nome.");
+                        mensagem.setText("Erro, navio " + nome + " não foi cadastrado");
                     }
-                } catch (NumberFormatException er) { 
-                    mensagem.setForeground(Color.RED);
-                    mensagem.setText("Erro, navio " + nome + "não foi cadastrado");
                 }
             }
-        }
     }
 
     public boolean CadastraNavio(Navio navio){

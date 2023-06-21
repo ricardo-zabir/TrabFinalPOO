@@ -1,16 +1,21 @@
 package ui;
 
+import dados.Porto;
 import dados.SistemaPorto;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class FormularioPorto extends JFrame {
 
     private JTextField campoTextoID, campoTextoNome, campoTextoPais;
-    private JButton botaoConfirmar, botaoApagar, botaoMostrarPortos, botaoSair;
+    private JButton botaoConfirmar, botaoApagar, botaoMostrarPorto, botaoSair;
     private JLabel mensagemInicial, mensagemID, mensagemNOME, mensagemPAIS;
 
     private SistemaPorto sistemaPorto;
@@ -28,7 +33,7 @@ public class FormularioPorto extends JFrame {
         campoTextoPais = new JTextField(20);
         botaoConfirmar = new JButton("Confirmar");
         botaoApagar = new JButton("Apagar");
-        botaoMostrarPortos = new JButton("Mostrar Portos");
+        botaoMostrarPorto = new JButton("Mostrar Portos");
         botaoSair = new JButton("Fechar");
         JPanel painel = new JPanel();
         painel.setLayout(new FlowLayout());
@@ -47,7 +52,7 @@ public class FormularioPorto extends JFrame {
         painel.add(botaoConfirmar);
         painel.add(botaoApagar);
 
-        painel.add(botaoMostrarPortos);
+        painel.add(botaoMostrarPorto);
         painel.add(botaoSair);
 
         this.add(painel);
@@ -57,8 +62,8 @@ public class FormularioPorto extends JFrame {
         this.setVisible(true);
 
         botaoConfirmar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
             String idTexto = campoTextoID.getText();
             String nome = campoTextoNome.getText();
             String pais = campoTextoPais.getText();
@@ -76,6 +81,16 @@ public class FormularioPorto extends JFrame {
                 } else {
                     sistemaPorto.cadastrarPorto(id, nome, pais);
                     JOptionPane.showMessageDialog(null, "Porto cadastrado com sucesso!");
+
+                    // Escrever no arquivo "PORTO.CSV"
+                    String linha = id + "," + nome + "," + pais;
+
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter("PORTOS.CSV", true))) {
+                        writer.write(linha);
+                        writer.newLine();
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(null, "Erro ao escrever no arquivo.");
+                    }
                 }
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Erro: O ID deve ser um número inteiro válido.");
@@ -92,19 +107,23 @@ public class FormularioPorto extends JFrame {
             }
         });
 
-        botaoMostrarPortos.addActionListener(new ActionListener() {
+        botaoMostrarPorto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sistemaPorto.mostrarPortos();
-            }
-        });
-
-        botaoSair.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Fecha a janela principal
-                Window window = SwingUtilities.getWindowAncestor(botaoSair);
-                window.dispose();
+                ArrayList<Porto> portos = sistemaPorto.getPortos();
+                if (portos.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Não há portos cadastrados.");
+                } else {
+                    StringBuilder mensagem = new StringBuilder();
+                    mensagem.append("Lista de Portos:\n");
+                    for (Porto porto : portos) {
+                        mensagem.append("ID: ").append(porto.getId()).append("\n");
+                        mensagem.append("Nome: ").append(porto.getNome()).append("\n");
+                        mensagem.append("País: ").append(porto.getPais()).append("\n");
+                        mensagem.append("\n");
+                    }
+                    JOptionPane.showMessageDialog(null, mensagem.toString());
+                }
             }
         });
     }

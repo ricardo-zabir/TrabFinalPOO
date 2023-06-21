@@ -11,6 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -202,61 +205,84 @@ public class FormularioTipoCarga extends JFrame {
                 dispose();
             }
         });
+
         perecivelRadioButton.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
-                JLabel origemLabel = new JLabel("Origem: ");
-                JLabel tempoValidadeLabel = new JLabel("Tempo validade: ");
-                JTextField origemField = new JTextField();
-                tempoValidadeField = new JTextField();
-                if(e.getStateChange() == ItemEvent.SELECTED) {
-                    painelCampos.removeAll();
-                    painelCampos.setLayout(new GridLayout(5, 1));
-                    painelCampos.add(perecivelRadioButton);
-                    painelCampos.add(duravelRadioButton);
-                    painelCampos.add(numeroLabel);
-                    numeroField.setText("");
-                    descricaoField.setText("");
-                    painelCampos.add(numeroField);
-                    painelCampos.add(descricaoLabel);
-                    painelCampos.add(descricaoField);
-                    painelCampos.add(origemLabel);
-                    painelCampos.add(origemField);
-                    painelCampos.add(tempoValidadeLabel);
-                    painelCampos.add(tempoValidadeField);
-                    painelCampos.revalidate();
+        public void itemStateChanged(ItemEvent e) {
+            JLabel origemLabel = new JLabel("Origem: ");
+            JLabel tempoValidadeLabel = new JLabel("Tempo validade: ");
+            JTextField origemField = new JTextField();
+            tempoValidadeField = new JTextField();
+            if(e.getStateChange() == ItemEvent.SELECTED) {
+                painelCampos.removeAll();
+                painelCampos.setLayout(new GridLayout(5, 1));
+                painelCampos.add(perecivelRadioButton);
+                painelCampos.add(duravelRadioButton);
+                painelCampos.add(numeroLabel);
+                numeroField.setText("");
+                descricaoField.setText("");
+                painelCampos.add(numeroField);
+                painelCampos.add(descricaoLabel);
+                painelCampos.add(descricaoField);
+                painelCampos.add(origemLabel);
+                painelCampos.add(origemField);
+                painelCampos.add(tempoValidadeLabel);
+                painelCampos.add(tempoValidadeField);
+                painelCampos.revalidate();
+
+                // Escrever no arquivo "TIPOSCARGAS.CSV"
+                String linha = "PERECIVEL" + "," + numeroField.getText() + "," + descricaoField.getText() + ","
+                        + origemField.getText() + "," + tempoValidadeField.getText();
+
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter("TIPOSCARGAS.CSV", true))) {
+                    writer.write(linha);
+                    writer.newLine();
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao escrever no arquivo.");
                 }
             }
-        });
+        }
+    });
 
         duravelRadioButton.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
-                JLabel setorLabel = new JLabel("Setor: ");
-                JLabel materialLabel = new JLabel("Material: ");
-                JLabel porcentagemIPILabel = new JLabel("Porcentagem IPI: ");
-                JTextField setorField = new JTextField();
-                JTextField materialField = new JTextField();
-                porcentagemIPIField = new JTextField();
-                if(e.getStateChange() == ItemEvent.SELECTED) {
-                    painelCampos.removeAll();
-                    painelCampos.setLayout(new GridLayout(6, 1));
-                    painelCampos.add(perecivelRadioButton);
-                    painelCampos.add(duravelRadioButton);
-                    painelCampos.add(numeroLabel);
-                    numeroField.setText("");
-                    descricaoField.setText("");
-                    painelCampos.add(numeroField);
-                    painelCampos.add(descricaoLabel);
-                    painelCampos.add(descricaoField);
-                    painelCampos.add(setorLabel);
-                    painelCampos.add(setorField);
-                    painelCampos.add(materialLabel);
-                    painelCampos.add(materialField);
-                    painelCampos.add(porcentagemIPILabel);
-                    painelCampos.add(porcentagemIPIField);
-                    painelCampos.revalidate();
+        public void itemStateChanged(ItemEvent e) {
+            JLabel setorLabel = new JLabel("Setor: ");
+            JLabel materialLabel = new JLabel("Material: ");
+            JLabel porcentagemIPILabel = new JLabel("Porcentagem IPI: ");
+            JTextField setorField = new JTextField();
+            JTextField materialField = new JTextField();
+            porcentagemIPIField = new JTextField();
+            if(e.getStateChange() == ItemEvent.SELECTED) {
+                painelCampos.removeAll();
+                painelCampos.setLayout(new GridLayout(6, 1));
+                painelCampos.add(perecivelRadioButton);
+                painelCampos.add(duravelRadioButton);
+                painelCampos.add(numeroLabel);
+                numeroField.setText("");
+                descricaoField.setText("");
+                painelCampos.add(numeroField);
+                painelCampos.add(descricaoLabel);
+                painelCampos.add(descricaoField);
+                painelCampos.add(setorLabel);
+                painelCampos.add(setorField);
+                painelCampos.add(materialLabel);
+                painelCampos.add(materialField);
+                painelCampos.add(porcentagemIPILabel);
+                painelCampos.add(porcentagemIPIField);
+                painelCampos.revalidate();
+
+                // Escrever no arquivo "TIPOSCARGAS.CSV"
+                String linha = "DURAVEL" + "," + numeroField.getText() + "," + descricaoField.getText() + ","
+                        + setorField.getText() + "," + materialField.getText() + "," + porcentagemIPIField.getText();
+
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter("TIPOSCARGAS.CSV", true))) {
+                    writer.write(linha);
+                    writer.newLine();
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao escrever no arquivo.");
                 }
             }
-        });
+        }
+    });
 
         GridLayout grid = new GridLayout(4, 1);
         JPanel painel = new JPanel(grid);

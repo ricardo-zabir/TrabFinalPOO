@@ -9,6 +9,9 @@ import ui.FormularioCliente;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -69,37 +72,45 @@ public class FormularioCliente extends JFrame {
                     String exists = checkClient(Integer.parseInt(codigoField.getText()), emailField.getText(), clientes);
                     String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
                     Pattern pattern = Pattern.compile(emailRegex);
-                    if(!pattern.matcher(emailField.getText()).matches()) {
+                    if (!pattern.matcher(emailField.getText()).matches()) {
                         throw new IllegalArgumentException();
-                    } 
-                if (exists.equals("")) {
-                    sp.cadastrarCliente(Integer.parseInt(codigoField.getText()), nomeField.getText(), emailField.getText());
-                    String nome = nomeField.getText();
-                    nomeField.setText("");
-                    codigoField.setText("");
-                    emailField.setText("");
-                    mensagem.setForeground(Color.GREEN);
-                    mensagem.setText("Cliente " + nome + " adicionado !");
-                }
-                else {
-                    mensagem.setForeground(Color.RED);
-                    mensagem.setText(exists + " já existe");
-                }
-                }
-                catch (NumberFormatException nfe) {
+                    }
+                    if (exists.equals("")) {
+                        sp.cadastrarCliente(Integer.parseInt(codigoField.getText()), nomeField.getText(), emailField.getText());
+                        String nome = nomeField.getText();
+                        nomeField.setText("");
+                        codigoField.setText("");
+                        emailField.setText("");
+                        mensagem.setForeground(Color.GREEN);
+                        mensagem.setText("Cliente " + nome + " adicionado!");
+
+                        // Escrever no arquivo "CLIENTES.CSV"
+                        String linha = codigoField.getText() + "," + nome + "," + emailField.getText();
+
+                        try (BufferedWriter writer = new BufferedWriter(new FileWriter("CLIENTES.CSV", true))) {
+                            writer.write(linha);
+                            writer.newLine();
+                        } catch (IOException ex) {
+                            JOptionPane.showMessageDialog(null, "Erro ao escrever no arquivo.");
+                        }
+
+                    } else {
+                        mensagem.setForeground(Color.RED);
+                        mensagem.setText(exists + " já existe");
+                    }
+                } catch (NumberFormatException nfe) {
                     mensagem.setForeground(Color.RED);
                     mensagem.setText("Código deve ser numérico");
-                }
-                catch(IllegalArgumentException iae) {
+                } catch (IllegalArgumentException iae) {
                     mensagem.setForeground(Color.RED);
                     mensagem.setText("E-mail inválido");
-                }
-                catch(Exception ex) {
+                } catch (Exception ex) {
                     mensagem.setForeground(Color.RED);
                     mensagem.setText("Nenhum campo pode estar vazio");
                 }
             }
         });
+
         limparBotao.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
