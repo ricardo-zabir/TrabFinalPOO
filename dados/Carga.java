@@ -14,6 +14,7 @@ public class Carga {
     private String situacao;
     private TipoCarga numero;
     private String prioridade;
+    private Navio nome;
     private double frete;
 
     public Carga(int identificador, int portoOrigem, int portoDestino, Cliente codigo, int peso, Double valorDeclarado, int tempoMaximo, String situacao, TipoCarga numero, String prioridade) {
@@ -27,6 +28,7 @@ public class Carga {
         this.situacao = situacao;
         this.numero = numero;
         this.prioridade = prioridade;
+        this.nome = null;
         this.frete = 0.00;
     }
 
@@ -92,6 +94,14 @@ public class Carga {
 
     public void setPrioridade(String prioridade) {
         this.prioridade = prioridade;
+    }
+
+    public Navio getNome(){
+        return nome;
+    }
+
+    public double getFrete(){
+        return frete;
     }
 
     public void setFrete(Navio n, ArrayList<Porto> portos, ArrayList<Distancia> distancias) {

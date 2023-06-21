@@ -30,7 +30,7 @@ public class Navio{
         return velocidade;
     }
     
-    public double autonomia(){
+    public double getAutonomia(){
         return autonomia;
     }
     

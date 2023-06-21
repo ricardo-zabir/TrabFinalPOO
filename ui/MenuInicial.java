@@ -105,9 +105,8 @@ import java.awt.event.ActionListener;
               FormularioTipoCarga formularioTipoCarga = new FormularioTipoCarga(sp);
               formularioTipoCarga.setVisible(true);
             }
-            else if(e.getSource() == botaoConsultaCarga)
-            {
-              
+            else if (e.getSource() == botaoConsultaCarga) {
+                sp.consultarCargas();
             }
             else if(e.getSource() == botaoAlterarCarga)
             {
