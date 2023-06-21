@@ -181,32 +181,34 @@ public class SistemaPorto {
         this.distancias.add(new Distancia(codOrigem, codDestino, distancia));
     }
 
-    public void consultarCargas() {
+    public String consultarCargas() {
+        String msg = "";
         if (cargas.isEmpty()) {
-            System.out.println("Não há cargas cadastradas.");
-            return;
+            msg += "Não há cargas cadastradas.";
+            return msg;
         }
 
         for (Carga carga : cargas) {
-            System.out.println("Carga:");
-            System.out.println("Identificador: " + carga.getIdentificador());
-            System.out.println("Cliente: " + carga.getCodigo().getCodigo());
-            System.out.println("Origem: " + carga.getPortoOrigem());
-            System.out.println("Destino: " + carga.getPortoDestino());
-            System.out.println("Peso: " + carga.getPeso());
-            System.out.println("Valor Declarado: " + carga.getValorDeclarado());
-            System.out.println("Tempo Máximo: " + carga.getTempoMaximo());
-            System.out.println("Tipo de Carga: " + carga.getNumero().getDescricao());
-            System.out.println("Prioridade: " + carga.getPrioridade());
-            System.out.println("Situação: " + carga.getSituacao());
+            msg += "Carga:";
+            msg += "Identificador: " + carga.getIdentificador();
+            msg += "Cliente cod: " + carga.getCodigo().getCodigo();
+            msg += "Porto origem cod:  " + carga.getPortoOrigem();
+            msg += "Porto destino cod: " + carga.getPortoDestino();
+            msg += "Peso: " + carga.getPeso();
+            msg += "Valor Declarado: " + carga.getValorDeclarado();
+            msg += "Tempo Máximo: " + carga.getTempoMaximo();
+            msg += "Tipo de Carga: " + carga.getNumero().getDescricao();
+            msg += "Prioridade: " + carga.getPrioridade();
+            msg += "Situação: " + carga.getSituacao();
 
             if (carga.getNome() != null) {
-                System.out.println("Navio Designado: " + carga.getNome().getNome());
-                System.out.println("Valor do Frete: " + carga.getFrete());
+                msg += "Navio Designado: " + carga.getNome().getNome();
+                msg += "Valor do Frete: " + carga.getFrete();
             }
 
             System.out.println("--------------------");
         }
+        return msg;
     }
 
     public void alterarSituacaoCarga(int codigoCarga, String novaSituacao) {
