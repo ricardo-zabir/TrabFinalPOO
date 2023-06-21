@@ -15,9 +15,9 @@ public class FormularioPorto extends JFrame {
 
     private SistemaPorto sistemaPorto;
 
-    public FormularioPorto() {
+    public FormularioPorto(SistemaPorto repo) {
         super();
-        sistemaPorto = new SistemaPorto();
+        sistemaPorto = repo;
         mensagemInicial = new JLabel("Digite as informações do porto ");
         mensagemInicial.setFont(mensagemInicial.getFont().deriveFont(45.0f));
         mensagemID = new JLabel("Digite o ID do porto");

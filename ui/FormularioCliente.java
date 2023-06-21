@@ -2,6 +2,7 @@ package ui;
 import javax.swing.*;
 
 import dados.Cliente;
+import dados.SistemaPorto;
 import ui.FormularioCliente;
 
 
@@ -25,12 +26,14 @@ public class FormularioCliente extends JFrame {
     private JButton botao;
     private JButton limparBotao;
     private JButton fecharBotao;
+    private SistemaPorto sp;
 
     private JLabel mensagem;
 
-    public FormularioCliente() {
+    public FormularioCliente(SistemaPorto repo) {
         super();
-        HashSet<Cliente> clientes = new HashSet<Cliente>();
+        sp = repo;
+        ArrayList<Cliente> clientes = sp.getClientes();
         JLabel formTitle = new JLabel("Digite os dados do cliente");
         formTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
@@ -70,10 +73,7 @@ public class FormularioCliente extends JFrame {
                         throw new IllegalArgumentException();
                     } 
                 if (exists.equals("")) {
-                    clientes.add(new Cliente(Integer.parseInt(codigoField.getText()), nomeField.getText(), emailField.getText()));
-                    List<Cliente> clientesList = new ArrayList<>(clientes);
-                    Collections.sort(clientesList, Comparator.comparing(Cliente::getCodigo));
-                    HashSet<Cliente> clientesSorted = new HashSet<>(clientesList);
+                    sp.cadastrarCliente(Integer.parseInt(codigoField.getText()), nomeField.getText(), emailField.getText());
                     String nome = nomeField.getText();
                     nomeField.setText("");
                     codigoField.setText("");
@@ -134,7 +134,7 @@ public class FormularioCliente extends JFrame {
     }
 
 
-    public String checkClient(int codigo, String email, HashSet<Cliente> clientes) {
+    public String checkClient(int codigo, String email, ArrayList<Cliente> clientes) {
         Iterator<Cliente> it = clientes.iterator();
         while (it.hasNext()) {
             Cliente cliente = it.next();
@@ -148,7 +148,7 @@ public class FormularioCliente extends JFrame {
         return "";
     }
     public static void main(String[] args) {
-        FormularioCliente form = new FormularioCliente();
+        // FormularioCliente form = new FormularioCliente();
     }
 
 }

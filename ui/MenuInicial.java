@@ -1,6 +1,9 @@
 package ui;
 
 import javax.swing.*;
+
+import dados.SistemaPorto;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,10 +19,11 @@ import java.awt.event.ActionListener;
     private JButton botaoEntradaSaidaDeDados;
     private JButton botaoFretarCarga;
     private JButton botaoFINAL;
+    private SistemaPorto sp;
 
-    public MenuInicial() {
+    public MenuInicial(SistemaPorto repo) {
         super();
-
+        sp = repo;
         JLabel formTitle = new JLabel("Menu Inicial");
         formTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
         
@@ -78,27 +82,27 @@ import java.awt.event.ActionListener;
         {
             if(e.getSource() == botaoCadastroPorto)
             {
-                FormularioPorto formularioPorto = new FormularioPorto();
+                FormularioPorto formularioPorto = new FormularioPorto(sp);
                 formularioPorto.setVisible(true);
             }
             else if(e.getSource() == botaoCadastroNavio)
             {
-                FormularioNavio formularioNavio = new FormularioNavio();
+                FormularioNavio formularioNavio = new FormularioNavio(sp);
                 formularioNavio.setVisible(true);
             }
             else if(e.getSource() == botaoCadastroCliente)
             {
-                FormularioCliente formularioCliente = new FormularioCliente();
+                FormularioCliente formularioCliente = new FormularioCliente(sp);
                 formularioCliente.setVisible(true);
             }
             else if(e.getSource() == botaoCadastroCarga)
             {
-                FormularioCarga formularioCarga = new FormularioCarga();
+                FormularioCarga formularioCarga = new FormularioCarga(sp);
                 formularioCarga.setVisible(true);
             }
             else if(e.getSource() == botaoCadastroTipoCarga)
             {
-              FormularioTipoCarga formularioTipoCarga = new FormularioTipoCarga();
+              FormularioTipoCarga formularioTipoCarga = new FormularioTipoCarga(sp);
               formularioTipoCarga.setVisible(true);
             }
             else if(e.getSource() == botaoConsultaCarga)
@@ -116,7 +120,7 @@ import java.awt.event.ActionListener;
             }
             else if(e.getSource() == botaoEntradaSaidaDeDados)
             {
-                InterfaceDados dados = new InterfaceDados();
+                InterfaceDados dados = new InterfaceDados(sp);
                 dados.setVisible(true);
             }
             else if(e.getSource() == botaoFINAL)
@@ -127,7 +131,7 @@ import java.awt.event.ActionListener;
     }
 
     public static void main(String[] args) {
-        MenuInicial janela = new MenuInicial();
+        // MenuInicial janela = new MenuInicial();
     }
     
 }

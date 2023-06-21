@@ -1,14 +1,19 @@
 package ui;
+import javax.swing.*;
 
+import dados.CargaDuravel;
+import dados.CargaPerecivel;
+import dados.SistemaPorto;
 import dados.TipoCarga;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 
 public class FormularioTipoCarga extends JFrame {
@@ -16,15 +21,17 @@ public class FormularioTipoCarga extends JFrame {
     // Componentes principais
     private JTextField numeroField;
     private JTextField descricaoField;
+    private JTextField tempoValidadeField;
+    private JTextField porcentagemIPIField;
     private JButton botao;
     private JButton limparBotao;
     private JButton fecharBotao;
-
+    private SistemaPorto sp;
     private JLabel mensagem;
 
-    public FormularioTipoCarga() {
+    public FormularioTipoCarga(SistemaPorto repo) {
         super();
-        ArrayList<TipoCarga> tiposCargas = new ArrayList<TipoCarga>();
+        sp = repo;
         JLabel formTitle = new JLabel("Digite os dados do tipo de carga");
         formTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
@@ -37,10 +44,19 @@ public class FormularioTipoCarga extends JFrame {
         buttonGroup.add(duravelRadioButton);
 
 
-        GridLayout gridCampos = new GridLayout(3, 2);
+        GridLayout gridCampos = new GridLayout(6, 1);
         JPanel painelCampos = new JPanel(gridCampos);
         JLabel numeroLabel = new JLabel("Número: ");
         JLabel descricaoLabel = new JLabel("Descrição: ");
+        JLabel origemLabel = new JLabel("Origem: ");
+        JLabel tempoValidadeLabel = new JLabel("Tempo validade: ");
+        JTextField origemField = new JTextField();
+        JLabel setorLabel = new JLabel("Setor: ");
+        JLabel materialLabel = new JLabel("Material: ");
+        JLabel porcentagemIPILabel = new JLabel("Porcentagem IPI: ");
+        JTextField setorField = new JTextField();
+        JTextField materialField = new JTextField();
+        porcentagemIPIField = new JTextField();
         numeroField = new JTextField();
         descricaoField = new JTextField();
         painelCampos.add(perecivelRadioButton);
@@ -60,10 +76,102 @@ public class FormularioTipoCarga extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    if(perecivelRadioButton.isSelected()) {
+                        Component[] components = painelCampos.getComponents();
+                        boolean algumVazio = false;
+                        for (Component component : components) {
+                            if(component instanceof JTextField) {
+                                JTextField field = (JTextField) component;
+                                if (field.getText().equals("")) {
+                                    algumVazio = true;
+                                } 
+                            }
+                    
+                        }
+                        if(algumVazio) {
+                            mensagem.setForeground(Color.RED);
+                            mensagem.setText("Preencha todos os campos");
+                        }
+                        else {
+                            try {
+                                int num = Integer.parseInt(numeroField.getText());
+                                int tempoVal = Integer.parseInt(tempoValidadeField.getText());
+                                String exists = checkTipoCarga(num, sp.getTiposCargas());
+                                if(exists.equals("")) {
+                                    CargaPerecivel cp = new CargaPerecivel(num, descricaoField.getText(), origemField.getText(), tempoVal);
+                                    sp.cadastrarTipoCarga(cp);
+                                    mensagem.setForeground(Color.GREEN);
+                                    mensagem.setText("Carga " + cp.getNumero() + " adicionada");
+                                    Component[] cpcomponents = painelCampos.getComponents();
+                                    for (Component component : cpcomponents) {
+                                        if(component instanceof JTextField) {
+                                            JTextField field = (JTextField) component;
+                                            field.setText("");
+                                        }
+                                    }
+                                }
+                                else {
+                                    mensagem.setForeground(Color.RED);
+                                    mensagem.setText(exists + " já existe");
+                                }
+                            }
+                            catch(NumberFormatException n) {
+                                throw new NumberFormatException("Número e tempo de validade devem ser números");
+                            }
+                        }
+                    }
+                    else if(duravelRadioButton.isSelected()) {
+                        Component[] components = painelCampos.getComponents();
+                        boolean algumVazio = false;
+                        for (Component component : components) {
+                            if(component instanceof JTextField) {
+                                JTextField field = (JTextField) component;
+                                if (field.getText().equals("")) {
+                                    algumVazio = true;
+                                } 
+                            }
+                    
+                        }
+                        if(algumVazio) {
+                            mensagem.setForeground(Color.RED);
+                            mensagem.setText("Preencha todos os campos");
+                        }
+                        else {
+                            try {
+                                int num = Integer.parseInt(numeroField.getText());
+                                double porcIpi = Double.parseDouble(porcentagemIPIField.getText());
+                                String exists = checkTipoCarga(num, sp.getTiposCargas());
+                                if(exists.equals("")) {
+                                    CargaDuravel cd = new CargaDuravel(num, descricaoField.getText(), setorField.getText(), materialField.getText(), porcIpi);
+                                    sp.cadastrarTipoCarga(cd);
+                                    mensagem.setForeground(Color.GREEN);
+                                    mensagem.setText("Carga " + cd.getNumero() + " adicionada");
+                                    Component[] cdcomponents = painelCampos.getComponents();
+                                    for (Component component : cdcomponents) {
+                                        if(component instanceof JTextField) {
+                                            JTextField field = (JTextField) component;
+                                            field.setText("");
+                                        }
+                                    }
+                                }
+                                else {
+                                    mensagem.setForeground(Color.RED);
+                                    mensagem.setText(exists + " já existe");
+                                }
+                            }
+                            catch(NumberFormatException n) {
+                                throw new NumberFormatException("Número e porcentagem IPI devem ser números");
+                            }
+                        }
+                    }
+                    else {
+                        mensagem.setForeground(Color.RED);
+                        mensagem.setText("Selecione um tipo");
+                    }
                 }
                 catch (NumberFormatException nfe) {
                     mensagem.setForeground(Color.RED);
-                    mensagem.setText("Código deve ser numérico");
+                    mensagem.setText(nfe.getMessage());
                 }
                 catch(IllegalArgumentException iae) {
                     mensagem.setForeground(Color.RED);
@@ -78,14 +186,19 @@ public class FormularioTipoCarga extends JFrame {
         limparBotao.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                descricaoField.setText("");
-                numeroField.setText("");
+                Component[] components = painelCampos.getComponents();
+                for (Component component : components) {
+                    if(component instanceof JTextField) {
+                        JTextField field = (JTextField) component;
+                        field.setText("");
+                    }
+                }
             }
         });
         fecharBotao.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                dispose();
             }
         });
         perecivelRadioButton.addItemListener(new ItemListener() {
@@ -93,12 +206,15 @@ public class FormularioTipoCarga extends JFrame {
                 JLabel origemLabel = new JLabel("Origem: ");
                 JLabel tempoValidadeLabel = new JLabel("Tempo validade: ");
                 JTextField origemField = new JTextField();
-                JTextField tempoValidadeField = new JTextField();
+                tempoValidadeField = new JTextField();
                 if(e.getStateChange() == ItemEvent.SELECTED) {
                     painelCampos.removeAll();
+                    painelCampos.setLayout(new GridLayout(5, 1));
                     painelCampos.add(perecivelRadioButton);
                     painelCampos.add(duravelRadioButton);
                     painelCampos.add(numeroLabel);
+                    numeroField.setText("");
+                    descricaoField.setText("");
                     painelCampos.add(numeroField);
                     painelCampos.add(descricaoLabel);
                     painelCampos.add(descricaoField);
@@ -118,12 +234,15 @@ public class FormularioTipoCarga extends JFrame {
                 JLabel porcentagemIPILabel = new JLabel("Porcentagem IPI: ");
                 JTextField setorField = new JTextField();
                 JTextField materialField = new JTextField();
-                JTextField porcentagemIPIField = new JTextField();
+                porcentagemIPIField = new JTextField();
                 if(e.getStateChange() == ItemEvent.SELECTED) {
                     painelCampos.removeAll();
+                    painelCampos.setLayout(new GridLayout(6, 1));
                     painelCampos.add(perecivelRadioButton);
                     painelCampos.add(duravelRadioButton);
                     painelCampos.add(numeroLabel);
+                    numeroField.setText("");
+                    descricaoField.setText("");
                     painelCampos.add(numeroField);
                     painelCampos.add(descricaoLabel);
                     painelCampos.add(descricaoField);
@@ -163,8 +282,8 @@ public class FormularioTipoCarga extends JFrame {
     }
 
 
-    public String checkClient(int numero, ArrayList<TipoCarga> clientes) {
-        Iterator<TipoCarga> it = clientes.iterator();
+    public String checkTipoCarga(int numero, ArrayList<TipoCarga> tiposCargas) {
+        Iterator<TipoCarga> it = tiposCargas.iterator();
         while (it.hasNext()) {
             TipoCarga tipoCarga = it.next();
             if (tipoCarga.getNumero() == numero) {
@@ -174,7 +293,7 @@ public class FormularioTipoCarga extends JFrame {
         return "";
     }
     public static void main(String[] args) {
-        FormularioTipoCarga form = new FormularioTipoCarga();
+        // FormularioTipoCarga form = new FormularioTipoCarga();
     }
 
 }

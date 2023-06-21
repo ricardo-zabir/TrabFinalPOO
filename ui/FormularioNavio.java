@@ -1,6 +1,7 @@
 package ui;
 
 import dados.Navio;
+import dados.SistemaPorto;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,11 +21,12 @@ import java.util.ArrayList;
     private JButton botaoLIMPA;
     private JButton botaoFINAL;
     private JLabel mensagem;
+    private SistemaPorto sp;
 
-    public FormularioNavio() {
+    public FormularioNavio(SistemaPorto repo) {
         super();
-        navios = new ArrayList<Navio>();
-
+        sp = repo;
+        navios = sp.getNavios();
         JLabel formTitle = new JLabel("Digite as informações do navio:");
         formTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
@@ -141,6 +143,6 @@ import java.util.ArrayList;
     }
 
     public static void main(String[] args) {
-        FormularioNavio formNavio = new FormularioNavio();
+        // FormularioNavio formNavio = new FormularioNavio();
         }
 }

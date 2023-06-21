@@ -31,10 +31,11 @@ public class InterfaceDados extends JFrame{
     private JButton botaoCarregarDadosIniciais;
     private JButton botaoCarregarDados;
     private JLabel mensagem;
+    private SistemaPorto sp;
 
-    public InterfaceDados() {
+    public InterfaceDados(SistemaPorto repo) {
         super();
-
+        sp = repo;
         GridLayout gridCampos = new GridLayout(2, 2);
         JPanel painelCampos = new JPanel(gridCampos);
         JLabel arquivoLabel = new JLabel("Digite o nome do arquivo e a opção desejada");
@@ -106,7 +107,6 @@ public class InterfaceDados extends JFrame{
             {
                 if(!nomeArquivoField.getText().equals("")) {
                     ArrayList<String> arquivos = new ArrayList<>();
-                    SistemaPorto repo = new SistemaPorto();
                     arquivos.add("-PORTOS.CSV");
                     arquivos.add("-DISTANCIAS.CSV");
                     arquivos.add("-NAVIOS.CSV");
@@ -117,7 +117,7 @@ public class InterfaceDados extends JFrame{
                         for (String arquivo : arquivos) {
                             switch (arquivo) {
                                 case "-PORTOS.CSV":
-                                    String portosRetorno = lerPortos(new Scanner(Files.newBufferedReader(Paths.get(nomeArquivoField.getText() + "" + arquivo), Charset.defaultCharset())), repo);
+                                    String portosRetorno = lerPortos(new Scanner(Files.newBufferedReader(Paths.get(nomeArquivoField.getText() + "" + arquivo), Charset.defaultCharset())), sp);
                                     if(!portosRetorno.equals("")) {
                                         throw new DataFormatException(portosRetorno);
                                     }
@@ -126,26 +126,26 @@ public class InterfaceDados extends JFrame{
                                     break;
                                     
                                 case "-NAVIOS.CSV":
-                                    String naviosRetorno = lerNavios(new Scanner(Files.newBufferedReader(Paths.get(nomeArquivoField.getText() + "" + arquivo), Charset.defaultCharset())), repo);
+                                    String naviosRetorno = lerNavios(new Scanner(Files.newBufferedReader(Paths.get(nomeArquivoField.getText() + "" + arquivo), Charset.defaultCharset())), sp);
                                     if(!naviosRetorno.equals("")) {
                                         throw new DataFormatException(naviosRetorno);
                                     }
                                     break;
                                     
                                 case "-CLIENTES.CSV":
-                                    String clientesRetorno = lerClientes(new Scanner(Files.newBufferedReader(Paths.get(nomeArquivoField.getText() + "" + arquivo), Charset.defaultCharset())), repo);
+                                    String clientesRetorno = lerClientes(new Scanner(Files.newBufferedReader(Paths.get(nomeArquivoField.getText() + "" + arquivo), Charset.defaultCharset())), sp);
                                     if(!clientesRetorno.equals("")) {
                                         throw new DataFormatException(clientesRetorno);
                                     }
                                     break;
                                 case "-TIPOSCARGAS.CSV":
-                                    String tiposCargasRetorno = lerTipoDeCarga(new Scanner(Files.newBufferedReader(Paths.get(nomeArquivoField.getText() + "" + arquivo), Charset.defaultCharset())), repo);
+                                    String tiposCargasRetorno = lerTipoDeCarga(new Scanner(Files.newBufferedReader(Paths.get(nomeArquivoField.getText() + "" + arquivo), Charset.defaultCharset())), sp);
                                     if(!tiposCargasRetorno.equals("")) {
                                         throw new DataFormatException(tiposCargasRetorno);
                                     }
                                     break;
                                 case "-CARGAS.CSV":
-                                    String cargasRetorno = lerCarga(new Scanner(Files.newBufferedReader(Paths.get(nomeArquivoField.getText() + "" + arquivo), Charset.defaultCharset())), repo);
+                                    String cargasRetorno = lerCarga(new Scanner(Files.newBufferedReader(Paths.get(nomeArquivoField.getText() + "" + arquivo), Charset.defaultCharset())), sp);
                                     if(!cargasRetorno.equals("")) {
                                         throw new DataFormatException(cargasRetorno);
                                     }
@@ -155,7 +155,7 @@ public class InterfaceDados extends JFrame{
                             }
                         }
                         mensagem.setForeground(Color.BLACK);
-                        mensagem.setText(portosString(repo));
+                        mensagem.setText(portosString(sp));
                         // JPanel contentPanel = new JPanel(new GridLayout(1, 4));
                         // JLabel mensagemPortos = new JLabel();
                         // mensagemPortos.setForeground(Color.BLACK);
@@ -335,6 +335,6 @@ public class InterfaceDados extends JFrame{
     }
 
     public static void main(String[] args) {
-        InterfaceDados save = new InterfaceDados();
+        // InterfaceDados save = new InterfaceDados();
         }
 }

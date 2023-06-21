@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import dados.Cliente;
 import dados.SistemaPorto;
+import dados.TipoCarga;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -25,12 +26,10 @@ public class FormularioCarga extends JFrame{
     private JButton botaoConfirma;
     private JButton botaoLimpa;
     private JLabel mensagem;
-
-    private HashSet<Cliente> clientes;
-
-    public FormularioCarga(){
+    private SistemaPorto sp;
+    public FormularioCarga(SistemaPorto repo){
         super();
-
+        sp = repo;
         JLabel formTitle = new JLabel("Digite as informações da carga:");
         formTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
@@ -134,18 +133,23 @@ public class FormularioCarga extends JFrame{
                     int tempoMaximo = Integer.parseInt(tempoMaximoField.getText());
                     String prioridade = prioridadeField.getText();
                     int codigo = Integer.parseInt(codigoClienteField.getText());
-                    Cliente cliente = checkCodigo(codigo, clientes);
+                    int numero = Integer.parseInt(tipoCargaNumeroField.getText());
+                    Cliente cliente = sp.getClientes().stream().filter(cl -> cl.getCodigo() == codigo).toList().get(0);
+                    TipoCarga tc = sp.getTiposCargas().stream().filter(tcc -> tcc.getNumero() == numero).toList().get(0);
 
-
-                    if (cliente != null) {
-                        SistemaPorto.cadastrarCarga(identificador, portoOrigem, portoDestino, codigo, peso, valorDeclarado, tempoMaximo, situacao, tipoCarga, prioridade);
+                    if (cliente != null && tc != null) {
+                        sp.cadastrarCarga(identificador, portoOrigem, portoDestino, cliente, peso, valorDeclarado, tempoMaximo, "PENDENTE", tc, prioridade);
                         mensagem.setForeground(Color.GREEN);
                         mensagem.setText("Carga cadastrada com sucesso");
                     } else {
                         mensagem.setForeground(Color.RED);
                         mensagem.setText("Erro, cliente não encontrado");
                     }
-                } catch (NumberFormatException erro) {
+                } catch (IndexOutOfBoundsException iou) {
+                    mensagem.setForeground(Color.RED);
+                    mensagem.setText("Erro, tipo de carga ou cliente não encontrado");
+                }
+                 catch (NumberFormatException erro) {
                     mensagem.setForeground(Color.RED);
                     mensagem.setText("Erro, verifique os campos numéricos");
                 } catch (Exception erro) { 
