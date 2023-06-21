@@ -13,11 +13,9 @@ import java.awt.event.ActionListener;
     private JButton botaoCadastroTipoCarga;
     private JButton botaoConsultaCarga;
     private JButton botaoAlterarCarga;
-    private JButton botaoCarregarDados;
+    private JButton botaoEntradaSaidaDeDados;
     private JButton botaoFretarCarga;
     private JButton botaoFINAL;
-    private JButton botaoSalvarDados;
-    private JButton botaoCarregarDadosInicias;
 
     public MenuInicial() {
         super();
@@ -32,10 +30,8 @@ import java.awt.event.ActionListener;
         botaoCadastroTipoCarga = new JButton("Cadastrar Tipo de Carga");
         botaoConsultaCarga = new JButton("Consultar Carga");
         botaoAlterarCarga = new JButton("Alterar Situação de uma carga");
-        botaoCarregarDados = new JButton("Carregar Dados");
+        botaoEntradaSaidaDeDados = new JButton("Entrada e Saída de Dados");
         botaoFretarCarga = new JButton("Fretar Carga");
-        botaoSalvarDados = new JButton("Salvar Dados");
-        botaoCarregarDadosInicias = new JButton("Carregar Dados Iniciais");
         botaoFINAL = new JButton("Finalizar");
 
         GridLayout grid = new GridLayout(6, 4);
@@ -50,10 +46,8 @@ import java.awt.event.ActionListener;
         botaoPainel.add(botaoCadastroTipoCarga);
         botaoPainel.add(botaoConsultaCarga);
         botaoPainel.add(botaoAlterarCarga);
-        botaoPainel.add(botaoCarregarDados);
+        botaoPainel.add(botaoEntradaSaidaDeDados);
         botaoPainel.add(botaoFretarCarga);
-        botaoPainel.add(botaoSalvarDados);
-        botaoPainel.add(botaoCarregarDadosInicias);
         botaoPainel.add(botaoFINAL);
         painel.add(botaoPainel);
 
@@ -73,8 +67,7 @@ import java.awt.event.ActionListener;
         botaoConsultaCarga.addActionListener(tratadorEventos);
         botaoAlterarCarga.addActionListener(tratadorEventos);
         botaoFretarCarga.addActionListener(tratadorEventos);
-        botaoSalvarDados.addActionListener(tratadorEventos);
-        botaoCarregarDadosInicias.addActionListener(tratadorEventos);
+        botaoEntradaSaidaDeDados.addActionListener(tratadorEventos);
         botaoFINAL.addActionListener(tratadorEventos);
     }
     
@@ -117,22 +110,14 @@ import java.awt.event.ActionListener;
               AlterarCarga alterarCarga = new AlterarCarga();
               alterarCarga.setVisible(true);
             }
-            else if(e.getSource() == botaoCarregarDados)
-            {
-              
-            }
             else if(e.getSource() == botaoFretarCarga)
             {
               
             }
-            else if(e.getSource() == botaoSalvarDados)
+            else if(e.getSource() == botaoEntradaSaidaDeDados)
             {
-              
-            }
-            else if(e.getSource() == botaoCarregarDadosInicias)
-            {
-                CarregarDadosIniciais carregarDadosIniciais = new CarregarDadosIniciais();
-                carregarDadosIniciais.setVisible(true);
+                InterfaceDados dados = new InterfaceDados();
+                dados.setVisible(true);
             }
             else if(e.getSource() == botaoFINAL)
             {

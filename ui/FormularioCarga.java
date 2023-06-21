@@ -34,18 +34,17 @@ public class FormularioCarga extends JFrame{
         JLabel formTitle = new JLabel("Digite as informações da carga:");
         formTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-        clientes = new HashSet<>();
         GridLayout gridCampos = new GridLayout(2, 2);
         JPanel painelCampos = new JPanel(gridCampos);
-        JLabel identificadorLabel = new JLabel(" ");
-        JLabel portoOrigemLabel = new JLabel(" ");
-        JLabel portoDestinoLabel = new JLabel(" ");
-        JLabel codigoClienteLabel = new JLabel(" ");
-        JLabel pesoLabel = new JLabel(" ");
-        JLabel valorDeclaradoLabel = new JLabel(" ");
-        JLabel tempoMaximoLabel = new JLabel(" ");
-        JLabel tipoCargaNumeroLabel = new JLabel(" ");
-        JLabel prioridadeLabel = new JLabel(" ");
+        JLabel identificadorLabel = new JLabel("Identificador: ");
+        JLabel portoOrigemLabel = new JLabel("Porto de Origem: ");
+        JLabel portoDestinoLabel = new JLabel("Porto de Destino: ");
+        JLabel codigoClienteLabel = new JLabel("Código do Cliente: ");
+        JLabel pesoLabel = new JLabel("Peso: ");
+        JLabel valorDeclaradoLabel = new JLabel("Valor Declarado: ");
+        JLabel tempoMaximoLabel = new JLabel("Tempo máximo: ");
+        JLabel tipoCargaNumeroLabel = new JLabel("Número Carga: ");
+        JLabel prioridadeLabel = new JLabel("Prioridade: ");
         identificadorField = new JTextField();
         portoOrigemField = new JTextField();
         portoDestinoField = new JTextField();
@@ -79,7 +78,7 @@ public class FormularioCarga extends JFrame{
         botaoFinal = new JButton("Fechar");
         mensagem = new JLabel();
 
-        GridLayout grid = new GridLayout(4, 1);
+        GridLayout grid = new GridLayout(5, 2);
         JPanel painel = new JPanel(grid);
         painel.add(formTitle);
         painel.add(painelCampos);
@@ -93,7 +92,7 @@ public class FormularioCarga extends JFrame{
 
         this.setTitle("Cadastro de Carga");
         this.add(painel);
-        this.setSize(900,500);
+        this.setSize(1000,600);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
 
@@ -126,7 +125,7 @@ public class FormularioCarga extends JFrame{
             }
             else if(e.getSource() == botaoConfirma)
             {
-                try {
+               try {
                     int identificador = Integer.parseInt(identificadorField.getText());
                     int portoOrigem = Integer.parseInt(portoOrigemField.getText());
                     int portoDestino = Integer.parseInt(portoDestinoField.getText());
@@ -155,14 +154,5 @@ public class FormularioCarga extends JFrame{
                 }
             }
         }
-    }
-
-        public static Cliente checkCodigo(int codigo, HashSet<Cliente> clientes) {
-        for (Cliente cliente : clientes) {
-            if (cliente.getCodigo() == codigo) {
-                return cliente;
-            }
-        }
-        return null; // Retorna null se o cliente não for encontrado
     }
 }

@@ -293,15 +293,15 @@ public class InterfaceDados extends JFrame{
             try {
                 int codigo = Integer.parseInt(slices[0]);
                 int codCliente = Integer.parseInt(slices[1]);
-                // Cliente cliente = sp.getClientes().stream().filter(c -> c.getCodigo() == codCliente).toList().get(0);
+                Cliente cliente = sp.getClientes().stream().filter(c -> c.getCodigo() == codCliente).toList().get(0);
                 int codOrigem = Integer.parseInt(slices[2]);
                 int codDestino = Integer.parseInt(slices[3]);
                 int peso = Integer.parseInt(slices[4]);
                 Double valorDeclarado = Double.parseDouble(slices[5].replace(',', '.'));
                 int tempoMaximo = Integer.parseInt(slices[6]);
                 int codTipoCarga = Integer.parseInt(slices[7]);
-                //TipoCarga tipoCarga = sp.getTiposCargas().stream().filter(tc -> tc.getNumero() == codTipoCarga).toList().get(0);
-                //sp.cadastrarCarga(codigo, codOrigem, codDestino, cliente, peso, valorDeclarado, tempoMaximo, slices[9], tipoCarga, slices[8]);
+                TipoCarga tipoCarga = sp.getTiposCargas().stream().filter(tc -> tc.getNumero() == codTipoCarga).toList().get(0);
+                sp.cadastrarCarga(codigo, codOrigem, codDestino, cliente, peso, valorDeclarado, tempoMaximo, slices[9], tipoCarga, slices[8]);
 
             }
             catch(Exception e) {
