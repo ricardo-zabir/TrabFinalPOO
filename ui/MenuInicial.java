@@ -111,7 +111,7 @@ import java.awt.event.ActionListener;
             }
             else if(e.getSource() == botaoAlterarCarga)
             {
-              AlterarCarga alterarCarga = new AlterarCarga();
+              AlterarCarga alterarCarga = new AlterarCarga(sp);
               alterarCarga.setVisible(true);
             }
             else if(e.getSource() == botaoFretarCarga)

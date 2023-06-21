@@ -17,11 +17,11 @@ public class AlterarCarga extends JFrame{
     private JButton botaoConfirma;
     private JLabel mensagem;
     private JLabel mensagem2;
-    SistemaPorto sistema = new SistemaPorto();
+    private SistemaPorto sp;
 
-    public AlterarCarga() {
+    public AlterarCarga(SistemaPorto repo) {
         super();
-
+        sp = repo;
         GridLayout gridCampos = new GridLayout(2, 2);
         JPanel painelCampos = new JPanel(gridCampos);
         JLabel codigoSolicitadoLabel = new JLabel("Digite o código da carga:");
@@ -74,7 +74,7 @@ public class AlterarCarga extends JFrame{
             else if(e.getSource() == botaoConfirma){
                 int codigoCarga = Integer.parseInt(codigoSolicitadoField.getText());
                 String novaSituacao = novaSituacaoField.getText();
-                ArrayList<Carga> cargas = sistema.getCargas();
+                ArrayList<Carga> cargas = sp.getCargas();
                 Carga carga = null;
                 for (Carga c : cargas) {
                     if (c.getIdentificador() == codigoCarga) {
@@ -116,6 +116,6 @@ public class AlterarCarga extends JFrame{
     }
     
     public static void main(String[] args) {
-        AlterarCarga formAlterarCarga = new AlterarCarga();
+        // AlterarCarga formAlterarCarga = new AlterarCarga();
     }
 }
