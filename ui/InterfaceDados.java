@@ -389,55 +389,51 @@ public class InterfaceDados extends JFrame{
     // Metodos de salvar Arquivo.
 
     private static void salvarArquivoPortos(String nomeArquivo, SistemaPorto sp) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo + "_portos.txt"))) {
-            writer.write("Id;Nome;Pais");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("PORTOS.CSV"))) {
+            writer.write("id;nome;pais");
             writer.newLine();
             for (Porto porto : sp.getPortos()) {
-                writer.write(porto.getId() + ";" + porto.getNome() + ";" + porto.getPais());
-                writer.newLine();
+                writer.write(porto.getId() + ";" + porto.getNome() + ";" + porto.getPais() + "\n");
             }
         }
     }
 
     private static void salvarArquivoNavios(String nomeArquivo, SistemaPorto sp) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo + "_navios.txt"))) {
-            writer.write("Nome;Velocidade;Autonomia;CustoMilhaBasico");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("NAVIO.CSV"))) {
+            writer.write("nome;velocidade;autonomia;customilhabasico");
             writer.newLine();
             for (Navio navio : sp.getNavios()) {
-                writer.write(navio.getNome() + ";" + navio.getVelocidade() + ";" + navio.getAutonomia() + ";" + navio.getCustoPorMilhaBasico());
-                writer.newLine();
+                writer.write(navio.getNome() + ";" + navio.getVelocidade() + ";" + navio.getAutonomia() + ";" + navio.getCustoPorMilhaBasico() + "\n");
             }
         }
     }
 
     private static void salvarArquivoClientes(String nomeArquivo, SistemaPorto sp) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo + "_clientes.txt"))) {
-            writer.write("Codigo;Nome;Email");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("CLIENTE.CSV"))) {
+            writer.write("cod;nome;email");
             writer.newLine();
             for (Cliente cliente : sp.getClientes()) {
-                writer.write(cliente.getCodigo() + ";" + cliente.getNome() + ";" + cliente.getEmail());
-                writer.newLine();
+                writer.write(cliente.getCodigo() + ";" + cliente.getNome() + ";" + cliente.getEmail() + "\n");
             }
         }
     }
 
     private static void salvarArquivoCargas(String nomeArquivo, SistemaPorto sp) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo + "_cargas.txt"))) {
-            writer.write("Identificador;PortoOrigem;PortoDestino;CodigoCliente;Peso;ValorDeclarado;TempoMaximo;Situacao;Numero;Prioridade");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("CARGAS.CSV"))) {
+            writer.write("codigo;cliente;origem;destino;peso;valordeclarado;tempomaximo;tipocarga;prioridade;situacao");
             writer.newLine();
             for (Carga carga : sp.getCargas()) {
-                writer.write(carga.getIdentificador() + ";" + carga.getPortoOrigem() + ";" + carga.getPortoDestino() + ";" +
-                            carga.getCodigo().getCodigo() + ";" + carga.getPeso() + ";" + carga.getValorDeclarado() + ";" +
-                            carga.getTempoMaximo() + ";" + carga.getSituacao() + ";" + carga.getNumero().getNumero() + ";" +
-                            carga.getPrioridade());
-                writer.newLine();
+                writer.write(carga.getIdentificador() + ";" + carga.getCodigo().getCodigo() + carga.getPortoOrigem() + ";" + carga.getPortoDestino() + ";" +
+                             carga.getPeso() + ";" + carga.getValorDeclarado() + ";" + carga.getTempoMaximo() + ";" +
+                             carga.getPrioridade() + ";" + carga.getNumero().getNumero() + ";" +
+                             carga.getSituacao() + "\n");
             }
         }
     }
 
     public static void salvarArquivoTipoCarga(String arquivo, SistemaPorto sp) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(arquivo))) {
-            writer.write("Número;Nome;Descrição;Tipo;Atributo Adicional" + System.lineSeparator());
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("TIPOSCARGAS.CSV"))) {
+            writer.write("numero;descrição;categoria;origem_setor;tempomaximo_material");
 
             for (TipoCarga tipoCarga : sp.getTiposCargas()) {
                 if (tipoCarga instanceof CargaPerecivel) {
@@ -454,15 +450,15 @@ public class InterfaceDados extends JFrame{
                             + "DURAVEL" + ";"
                             + cargaDuravel.getSetor() + ";"
                             + cargaDuravel.getMaterial() + ";"
-                            + cargaDuravel.getPorcentagemIPI() + System.lineSeparator());
+                            + cargaDuravel.getPorcentagemIPI() + System.lineSeparator() + "\n");
                 }
             }
         }
     }
 
     public static void salvarArquivoDistancia(String arquivo, SistemaPorto sp) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(arquivo))) {
-            writer.write("Origem;Destino;Distância" + System.lineSeparator());
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("DISTANCIA.CSV"))) {
+            writer.write("origem;destino;distância" + System.lineSeparator());
 
             ArrayList<Distancia> distancias = sp.getDistancias();
 
@@ -471,7 +467,7 @@ public class InterfaceDados extends JFrame{
                 int destino = distancia.getDestino();
                 double valorDistancia = distancia.getDistancia();
 
-                writer.write(origem + ";" + destino + ";" + valorDistancia + System.lineSeparator());
+                writer.write(origem + ";" + destino + ";" + valorDistancia + System.lineSeparator() + "\n");
             }
         }
     }
@@ -479,7 +475,7 @@ public class InterfaceDados extends JFrame{
     // Metodos de carregar Arquivos.
 
     private static void carregarArquivoPortos(String nomeArquivo, SistemaPorto sp) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo + "_portos.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo + "PORTO.CSV"))) {
             String line = reader.readLine();
             while ((line = reader.readLine()) != null) {
                 String[] slices = line.split(";");
@@ -494,7 +490,7 @@ public class InterfaceDados extends JFrame{
     }
 
     private static void carregarArquivoNavios(String nomeArquivo, SistemaPorto sp) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo + "_navios.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo + "NAVIO.CSV"))) {
             String line = reader.readLine();
             while ((line = reader.readLine()) != null) {
                 String[] slices = line.split(";");
@@ -510,7 +506,7 @@ public class InterfaceDados extends JFrame{
     }
 
     private static void carregarArquivoClientes(String nomeArquivo, SistemaPorto sp) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo + "_clientes.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo + "CLIENTE.CSV"))) {
             String line = reader.readLine();
             while ((line = reader.readLine()) != null) {
                 String[] slices = line.split(";");
@@ -525,7 +521,7 @@ public class InterfaceDados extends JFrame{
     }
 
     private static void carregarArquivoCargas(String nomeArquivo, SistemaPorto sp) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo + "_cargas.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo + "CARGA.CSV"))) {
             String line = reader.readLine();
             while ((line = reader.readLine()) != null) {
                 String[] slices = line.split(";");
@@ -608,7 +604,7 @@ public class InterfaceDados extends JFrame{
         }
         mensagemString += " <br /> Navios: ";
         for (Navio navio : sp.getNavios()) {
-            mensagemString += "Nome: " + navio.getNome() + ", velocidade: " + navio.getVelocidade() + ", autonomia:" + navio.autonomia() + ", custo por milha basico: " + navio.getCustoPorMilhaBasico() + " | ";
+            mensagemString += "Nome: " + navio.getNome() + ", velocidade: " + navio.getVelocidade() + ", autonomia:" + navio.getAutonomia() + ", custo por milha basico: " + navio.getCustoPorMilhaBasico() + " | ";
         }
         mensagemString += "<br /> Clientes:";
         for (Cliente cliente: sp.getClientes()) {

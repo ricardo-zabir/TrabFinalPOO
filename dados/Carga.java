@@ -9,7 +9,7 @@ public class Carga {
     private int portoDestino;
     private Cliente codigo;
     private int peso;
-    private Double valorDeclarado;
+    private double valorDeclarado;
     private int tempoMaximo;
     private String situacao;
     private TipoCarga numero;
@@ -17,7 +17,7 @@ public class Carga {
     private Navio nome;
     private double frete;
 
-    public Carga(int identificador, int portoOrigem, int portoDestino, Cliente codigo, int peso, Double valorDeclarado, int tempoMaximo, String situacao, TipoCarga numero, String prioridade) {
+    public Carga(int identificador, int portoOrigem, int portoDestino, Cliente codigo, int peso, double valorDeclarado, int tempoMaximo, String situacao, TipoCarga numero, String prioridade) {
         this.identificador = identificador;
         this.portoOrigem = portoOrigem;
         this.portoDestino = portoDestino;
@@ -60,7 +60,7 @@ public class Carga {
         this.peso = peso;
     }
 
-    public Double getValorDeclarado() {
+    public double getValorDeclarado() {
         return valorDeclarado;
     }
 
