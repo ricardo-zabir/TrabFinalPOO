@@ -23,6 +23,7 @@ public class FormularioTipoCarga extends JFrame {
     private JTextField descricaoField;
     private JTextField tempoValidadeField;
     private JTextField porcentagemIPIField;
+    private JTextField materiaField;
     private JButton botao;
     private JButton limparBotao;
     private JButton fecharBotao;

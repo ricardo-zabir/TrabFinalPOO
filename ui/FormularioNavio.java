@@ -15,8 +15,6 @@ import java.util.ArrayList;
     private JTextField velocidadeField;
     private JTextField autonomiaField;
     private JTextField custoMilhaField;
-    private JTextField capacidadeField;
-    private JTextField statusField;
     private JButton botaoCONFIRMA;
     private JButton botaoLIMPA;
     private JButton botaoFINAL;
@@ -36,14 +34,10 @@ import java.util.ArrayList;
         JLabel velocidadeLabel = new JLabel("Velocidade(em nós):");
         JLabel autonomiaLabel = new JLabel("Autonomia(milhas náuticas):");
         JLabel custoMilhaLabel = new JLabel("Custo por Milha:");
-        JLabel capacidadeLabel = new JLabel("Capacidade:");
-        JLabel statusJLabel = new JLabel("Status:");
         nomeField = new JTextField();
         velocidadeField = new JTextField();
         autonomiaField = new JTextField();
         custoMilhaField = new JTextField();
-        capacidadeField = new JTextField();
-        statusField = new JTextField();
         painelCampos.add(nomeLabel);
         painelCampos.add(nomeField);
         painelCampos.add(velocidadeLabel);
@@ -52,12 +46,7 @@ import java.util.ArrayList;
         painelCampos.add(autonomiaField);
         painelCampos.add(custoMilhaLabel);
         painelCampos.add(custoMilhaField);
-        painelCampos.add(capacidadeLabel);
-        painelCampos.add(capacidadeField);
-        painelCampos.add(statusJLabel);
-        painelCampos.add(statusField);
 
-        
 
         botaoCONFIRMA = new JButton("Confirmar cadastro");
         botaoLIMPA = new JButton("Limpar");
@@ -100,8 +89,6 @@ import java.util.ArrayList;
                 velocidadeField.setText("");
                 autonomiaField.setText("");
                 custoMilhaField.setText("");
-                capacidadeField.setText("");
-                statusField.setText("");
             }
             else if(e.getSource() == botaoFINAL)
             {
@@ -114,8 +101,8 @@ import java.util.ArrayList;
                     double velocidade = Double.parseDouble(velocidadeField.getText());
                     double autonomia = Double.parseDouble(autonomiaField.getText());
                     double custoPorMilhaBasico = Double.parseDouble(custoMilhaField.getText());
-                    double capacidade = Double.parseDouble(capacidadeField.getText());
-                    String status = statusField.getText();
+                    int capacidade = 0;
+                    String status = null;
                     Navio navio = new Navio(nome, velocidade, autonomia, custoPorMilhaBasico, capacidade, status);
                     if(CadastraNavio(navio)){
                         mensagem.setForeground(Color.BLUE);

@@ -66,6 +66,10 @@ public class Navio{
         this.status = status;
     }
 
+    public Carga carga(){
+        return carga;
+    }
+
     public void setCarga (Carga carga) {
         this.carga = carga;
     }

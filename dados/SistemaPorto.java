@@ -40,7 +40,7 @@ public class SistemaPorto {
         return tipoCargas;
     }
 
-    public ArrayList<Distancia> geDistancias()  {
+    public ArrayList<Distancia> getDistancias()  {
         return distancias;
     }
 

@@ -6,12 +6,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.zip.DataFormatException;
 
@@ -19,6 +24,7 @@ import dados.Carga;
 import dados.CargaDuravel;
 import dados.CargaPerecivel;
 import dados.Cliente;
+import dados.Distancia;
 import dados.Navio;
 import dados.Porto;
 import dados.SistemaPorto;
@@ -90,7 +96,12 @@ public class InterfaceDados extends JFrame{
                 try {
                     String file = nomeArquivoField.getText();
                    
-                    //Codigo de salvar dados
+                    salvarArquivoPortos(file, sp);
+                    salvarArquivoNavios(file, sp);
+                    salvarArquivoClientes(file, sp);
+                    salvarArquivoCargas(file, sp);
+                    salvarArquivoTipoCarga(file, sp);
+                    salvarArquivoDistancia(file, sp);
 
                     mensagem.setForeground(Color.BLUE);
                     mensagem.setText("Salvamento concluido");
@@ -99,9 +110,52 @@ public class InterfaceDados extends JFrame{
                     mensagem.setText("Erro");
                 }
             }
-            else if(e.getSource() == botaoCarregarDados)
-            {
+            else if (e.getSource() == botaoCarregarDados) {
+                if (!nomeArquivoField.getText().equals("")) {
+                    ArrayList<String> arquivos = new ArrayList<>();
+                    arquivos.add("-PORTOS.CSV");
+                    arquivos.add("-DISTANCIAS.CSV");
+                    arquivos.add("-NAVIOS.CSV");
+                    arquivos.add("-CLIENTES.CSV");
+                    arquivos.add("-TIPOSCARGAS.CSV");
+                    arquivos.add("-CARGAS.CSV");
 
+                    try {
+                        for (String arquivo : arquivos) {
+                            switch (arquivo) {
+                                case "-PORTOS.CSV":
+                                    carregarArquivoPortos(nomeArquivoField.getText() + arquivo, sp);
+                                    break;
+                                case "-DISTANCIAS.CSV":
+                                    carregarArquivoDistancia(nomeArquivoField.getText() + arquivo, sp);
+                                    break;
+                                case "-NAVIOS.CSV":
+                                    carregarArquivoNavios(nomeArquivoField.getText() + arquivo, sp);
+                                    break;
+                                case "-CLIENTES.CSV":
+                                    carregarArquivoClientes(nomeArquivoField.getText() + arquivo, sp);
+                                    break;
+                                case "-TIPOSCARGAS.CSV":
+                                    carregarArquivoTiposCargas(nomeArquivoField.getText() + arquivo, sp);
+                                    break;
+                                case "-CARGAS.CSV":
+                                    carregarArquivoCargas(nomeArquivoField.getText() + arquivo, sp);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        mensagem.setForeground(Color.BLACK);
+                        mensagem.setText(portosString(sp));
+                    } catch (Exception ex) {
+                        System.out.println(ex.getMessage());
+                        mensagem.setForeground(Color.RED);
+                        mensagem.setText("Erro ao carregar arquivos: " + ex.getMessage());
+                    }
+                } else {
+                    mensagem.setForeground(Color.RED);
+                    mensagem.setText("Preencha o campo");
+                }
             }
             else if(e.getSource() == botaoCarregarDadosIniciais)
             {
@@ -123,6 +177,10 @@ public class InterfaceDados extends JFrame{
                                     }
                                     break;
                                 case "-DISTANCIAS.CSV":
+                                    String distanciaRetorno = lerDistancias(new Scanner(Files.newBufferedReader(Paths.get(nomeArquivoField.getText() + "" + arquivo), Charset.defaultCharset())), sp);
+                                    if(!distanciaRetorno.equals("")) {
+                                        throw new DataFormatException(distanciaRetorno);
+                                    }
                                     break;
                                     
                                 case "-NAVIOS.CSV":
@@ -312,6 +370,236 @@ public class InterfaceDados extends JFrame{
         return "";
     }
 
+    public static String salvarDados(Scanner sc, SistemaPorto sp) {
+        System.out.print("Digite o nome do arquivo para salvar os dados (sem extensão): ");
+        String nomeArquivo = sc.next();
+        
+        try {
+            salvarArquivoPortos(nomeArquivo, sp);
+            salvarArquivoNavios(nomeArquivo, sp);
+            salvarArquivoClientes(nomeArquivo, sp);
+            salvarArquivoCargas(nomeArquivo, sp);
+        } catch (IOException e) {
+            return "ERRO: Problema ao salvar os dados. " + e.getMessage();
+        }
+
+        return "Dados salvos com sucesso no arquivo " + nomeArquivo + ".txt";
+    }
+
+    // Metodos de salvar Arquivo.
+
+    private static void salvarArquivoPortos(String nomeArquivo, SistemaPorto sp) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo + "_portos.txt"))) {
+            writer.write("Id;Nome;Pais");
+            writer.newLine();
+            for (Porto porto : sp.getPortos()) {
+                writer.write(porto.getId() + ";" + porto.getNome() + ";" + porto.getPais());
+                writer.newLine();
+            }
+        }
+    }
+
+    private static void salvarArquivoNavios(String nomeArquivo, SistemaPorto sp) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo + "_navios.txt"))) {
+            writer.write("Nome;Velocidade;Autonomia;CustoMilhaBasico");
+            writer.newLine();
+            for (Navio navio : sp.getNavios()) {
+                writer.write(navio.getNome() + ";" + navio.getVelocidade() + ";" + navio.getAutonomia() + ";" + navio.getCustoPorMilhaBasico());
+                writer.newLine();
+            }
+        }
+    }
+
+    private static void salvarArquivoClientes(String nomeArquivo, SistemaPorto sp) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo + "_clientes.txt"))) {
+            writer.write("Codigo;Nome;Email");
+            writer.newLine();
+            for (Cliente cliente : sp.getClientes()) {
+                writer.write(cliente.getCodigo() + ";" + cliente.getNome() + ";" + cliente.getEmail());
+                writer.newLine();
+            }
+        }
+    }
+
+    private static void salvarArquivoCargas(String nomeArquivo, SistemaPorto sp) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo + "_cargas.txt"))) {
+            writer.write("Identificador;PortoOrigem;PortoDestino;CodigoCliente;Peso;ValorDeclarado;TempoMaximo;Situacao;Numero;Prioridade");
+            writer.newLine();
+            for (Carga carga : sp.getCargas()) {
+                writer.write(carga.getIdentificador() + ";" + carga.getPortoOrigem() + ";" + carga.getPortoDestino() + ";" +
+                            carga.getCodigo().getCodigo() + ";" + carga.getPeso() + ";" + carga.getValorDeclarado() + ";" +
+                            carga.getTempoMaximo() + ";" + carga.getSituacao() + ";" + carga.getNumero().getNumero() + ";" +
+                            carga.getPrioridade());
+                writer.newLine();
+            }
+        }
+    }
+
+    public static void salvarArquivoTipoCarga(String arquivo, SistemaPorto sp) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(arquivo))) {
+            writer.write("Número;Nome;Descrição;Tipo;Atributo Adicional" + System.lineSeparator());
+
+            for (TipoCarga tipoCarga : sp.getTiposCargas()) {
+                if (tipoCarga instanceof CargaPerecivel) {
+                    CargaPerecivel cargaPerecivel = (CargaPerecivel) tipoCarga;
+                    writer.write(cargaPerecivel.getNumero() + ";"
+                            + cargaPerecivel.getDescricao() + ";"
+                            + "PERECIVEL" + ";"
+                            + cargaPerecivel.getOrigem() + ";"
+                            + cargaPerecivel.getTempoValidade() + System.lineSeparator());
+                } else if (tipoCarga instanceof CargaDuravel) {
+                    CargaDuravel cargaDuravel = (CargaDuravel) tipoCarga;
+                    writer.write(cargaDuravel.getNumero() + ";"
+                            + cargaDuravel.getDescricao() + ";"
+                            + "DURAVEL" + ";"
+                            + cargaDuravel.getSetor() + ";"
+                            + cargaDuravel.getMaterial() + ";"
+                            + cargaDuravel.getPorcentagemIPI() + System.lineSeparator());
+                }
+            }
+        }
+    }
+
+    public static void salvarArquivoDistancia(String arquivo, SistemaPorto sp) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(arquivo))) {
+            writer.write("Origem;Destino;Distância" + System.lineSeparator());
+
+            ArrayList<Distancia> distancias = sp.getDistancias();
+
+            for (Distancia distancia : distancias) {
+                int origem = distancia.getOrigem();
+                int destino = distancia.getDestino();
+                double valorDistancia = distancia.getDistancia();
+
+                writer.write(origem + ";" + destino + ";" + valorDistancia + System.lineSeparator());
+            }
+        }
+    }
+
+    // Metodos de carregar Arquivos.
+
+    private static void carregarArquivoPortos(String nomeArquivo, SistemaPorto sp) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo + "_portos.txt"))) {
+            String line = reader.readLine();
+            while ((line = reader.readLine()) != null) {
+                String[] slices = line.split(";");
+                if (slices.length >= 3) {
+                    int id = Integer.parseInt(slices[0]);
+                    String nome = slices[1];
+                    String pais = slices[2];
+                    sp.cadastrarPorto(id, nome, pais);
+                }
+            }
+        }
+    }
+
+    private static void carregarArquivoNavios(String nomeArquivo, SistemaPorto sp) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo + "_navios.txt"))) {
+            String line = reader.readLine();
+            while ((line = reader.readLine()) != null) {
+                String[] slices = line.split(";");
+                if (slices.length >= 4) {
+                    String nome = slices[0];
+                    double velocidade = Double.parseDouble(slices[1]);
+                    double autonomia = Double.parseDouble(slices[2]);
+                    double custoMilhaBasico = Double.parseDouble(slices[3]);
+                    sp.cadastrarNavio(nome, velocidade, autonomia, custoMilhaBasico);
+                }
+            }
+        }
+    }
+
+    private static void carregarArquivoClientes(String nomeArquivo, SistemaPorto sp) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo + "_clientes.txt"))) {
+            String line = reader.readLine();
+            while ((line = reader.readLine()) != null) {
+                String[] slices = line.split(";");
+                if (slices.length >= 3) {
+                    int codigo = Integer.parseInt(slices[0]);
+                    String nome = slices[1];
+                    String email = slices[2];
+                    sp.cadastrarCliente(codigo, nome, email);
+                }
+            }
+        }
+    }
+
+    private static void carregarArquivoCargas(String nomeArquivo, SistemaPorto sp) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo + "_cargas.txt"))) {
+            String line = reader.readLine();
+            while ((line = reader.readLine()) != null) {
+                String[] slices = line.split(";");
+                if (slices.length >= 10) {
+                    int identificador = Integer.parseInt(slices[0]);
+                    int portoOrigem = Integer.parseInt(slices[1]);
+                    int portoDestino = Integer.parseInt(slices[2]);
+                    int codigoCliente = Integer.parseInt(slices[3]);
+                    int peso = Integer.parseInt(slices[4]);
+                    double valorDeclarado = Double.parseDouble(slices[5]);
+                    int tempoMaximo = Integer.parseInt(slices[6]);
+                    String situacao = slices[7];
+                    int numero = Integer.parseInt(slices[8]);
+                    String prioridade = slices[9];
+
+                    Cliente cliente = null;
+                    for (Cliente c : sp.getClientes()) {
+                        if (c.getCodigo() == codigoCliente) {
+                            cliente = c;
+                            break;
+                        }
+                    }
+
+                    TipoCarga tipoCarga = null;
+                    for (TipoCarga tc : sp.getTiposCargas()) {
+                        if (tc.getNumero() == numero) {
+                            tipoCarga = tc;
+                            break;
+                        }
+                    }
+
+                    if (cliente != null && tipoCarga != null) {
+                        sp.cadastrarCarga(identificador, portoOrigem, portoDestino, cliente, peso, valorDeclarado, tempoMaximo, situacao, tipoCarga, prioridade);
+                    } else {
+                        System.out.println("Erro: Cliente ou TipoCarga não encontrado para a carga com identificador " + identificador);
+                    }
+                }
+            }
+        }
+    }
+
+    public static void carregarArquivoDistancia(String arquivo, SistemaPorto sp) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(arquivo))) {
+            String line = reader.readLine();
+            while ((line = reader.readLine()) != null) {
+                String[] slices = line.split(";");
+                int origem = Integer.parseInt(slices[0]);
+                int destino = Integer.parseInt(slices[1]);
+                double distancia = Double.parseDouble(slices[2].replace(',', '.'));
+                sp.cadastrarDistancia(origem, destino, distancia);
+            }
+        }
+    }
+
+    public static void carregarArquivoTiposCargas(String arquivo, SistemaPorto sp) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(arquivo))) {
+            String line = reader.readLine();
+            while ((line = reader.readLine()) != null) {
+                String[] slices = line.split(";");
+                int numero = Integer.parseInt(slices[0]);
+                String nome = slices[1];
+                String descricao = slices[2];
+                if (slices[3].equals("PERECIVEL")) {
+                    int tempo = Integer.parseInt(slices[4]);
+                    sp.cadastrarTipoCarga(new CargaPerecivel(numero, nome, descricao, tempo));
+                } else {
+                    String material = slices[3];
+                    double porcentagemIPI = Double.parseDouble(slices[4].replace(',', '.'));
+                    sp.cadastrarTipoCarga(new CargaDuravel(numero, nome, descricao, material, porcentagemIPI));
+                }
+            }
+        }
+    }
+    
     public static String portosString(SistemaPorto sp) {
 
         String mensagemString = "<html> Portos: ";
