@@ -26,7 +26,7 @@ valor final do frete [se não há cargas, mostra uma mensagem de erro]).
 carga; solicita a nova situação [se não há carga com o código indicado, mostra uma
 mensagem de erro; se a carga estiver na situação FINALIZADO, não pode ser alterado
 e mostra uma mensagem de erro]).
-- [ ] Carregar dados iniciais (solicita o nome do arquivo (sem extensão); carrega os dados
+- [x] Carregar dados iniciais (solicita o nome do arquivo (sem extensão); carrega os dados
 dos arquivos para o sistema; as cargas devem ser carregadas em uma fila de cargas
 pendentes; ao final da carga de dados, mostra todos os dados de portos, navios,
 clientes, cargas [se houver problemas na carga de dados, mostra uma mensagem de
@@ -37,10 +37,10 @@ com capacidade de fazer o frete, mas já está designado para outra carga, a car
 retorna para a fila de fretes pendentes. Se não há nenhum navio com capacidade de 
 fazer o frete a carga muda para a situação CANCELADO [se não há cargas na fila de
 cargas pendentes, mostra uma mensagem de erro]).
-- [ ] Salvar dados (solicita ao usuário um nome de arquivo (sem extensão) e salva todos
+- [x] Salvar dados (solicita ao usuário um nome de arquivo (sem extensão) e salva todos
 os dados cadastrados em um ou mais arquivos [se houver algum problema no
 salvamento mostra uma mensagem de erro]).
 - [ ] Carregar dados (solicita ao usuário um nome de arquivo (sem extensão) e carrega
 todos os dados de um ou mais arquivos [se houver algum problema no carregamento
 mostra uma mensagem de erro]).
-- [ ] Finalizar sistema (termina a execução do sistema).
+- [x] Finalizar sistema (termina a execução do sistema).

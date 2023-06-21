@@ -30,33 +30,6 @@ public class Carga {
         this.frete = 0.00;
     }
 
-    public void setFrete(Navio n, ArrayList<Porto> portos, ArrayList<Distancia> distancias) {
-        double frete = 0.00;
-        Distancia dist = distancias.stream().filter(d -> ((d.getOrigem() == this.getPortoOrigem() && d.getDestino() == this.getPortoDestino()) || (d.getOrigem() == this.getPortoDestino() && d.getDestino() == this.getPortoOrigem()))).toList().get(0);
-        if(prioridade.equals("BARATO")) {
-            frete += (dist.getDistancia() * n.getCustoPorMilhaBasico());
-        }
-        else if(prioridade.equals("RAPIDO")) {
-            frete += (dist.getDistancia() * (n.getCustoPorMilhaBasico() * 2));
-        }
-        if (this.getNumero() instanceof CargaPerecivel) {
-            frete += this.getPeso() * 2;
-        }
-        else if (this.getNumero() instanceof CargaDuravel) {
-            CargaDuravel cd = (CargaDuravel) this.getNumero();
-            double imposto = valorDeclarado * (cd.getPorcentagemIPI() / 100);
-            frete += this.getPeso() * 1.5 + imposto;
-        }
-        Porto portoOrigem = portos.stream().filter(p -> p.getId() == this.getPortoOrigem()).toList().get(0);
-        Porto portoDestino = portos.stream().filter(p -> p.getId() == this.getPortoDestino()).toList().get(0);
-        if(portoOrigem.getPais().equals("Brasil") && portoDestino.getPais().equals("BRASIL")) {
-            frete += 10000;
-        }
-        else {
-            frete += 50000;
-        }
-        this.frete = frete;
-    }
     public int getIdentificador() {
         return identificador;
     }
@@ -119,6 +92,34 @@ public class Carga {
 
     public void setPrioridade(String prioridade) {
         this.prioridade = prioridade;
+    }
+
+    public void setFrete(Navio n, ArrayList<Porto> portos, ArrayList<Distancia> distancias) {
+        double frete = 0.00;
+        Distancia dist = distancias.stream().filter(d -> ((d.getOrigem() == this.getPortoOrigem() && d.getDestino() == this.getPortoDestino()) || (d.getOrigem() == this.getPortoDestino() && d.getDestino() == this.getPortoOrigem()))).toList().get(0);
+        if(prioridade.equals("BARATO")) {
+            frete += (dist.getDistancia() * n.getCustoPorMilhaBasico());
+        }
+        else if(prioridade.equals("RAPIDO")) {
+            frete += (dist.getDistancia() * (n.getCustoPorMilhaBasico() * 2));
+        }
+        if (this.getNumero() instanceof CargaPerecivel) {
+            frete += this.getPeso() * 2;
+        }
+        else if (this.getNumero() instanceof CargaDuravel) {
+            CargaDuravel cd = (CargaDuravel) this.getNumero();
+            double imposto = valorDeclarado * (cd.getPorcentagemIPI() / 100);
+            frete += this.getPeso() * 1.5 + imposto;
+        }
+        Porto portoOrigem = portos.stream().filter(p -> p.getId() == this.getPortoOrigem()).toList().get(0);
+        Porto portoDestino = portos.stream().filter(p -> p.getId() == this.getPortoDestino()).toList().get(0);
+        if(portoOrigem.getPais().equals("Brasil") && portoDestino.getPais().equals("BRASIL")) {
+            frete += 10000;
+        }
+        else {
+            frete += 50000;
+        }
+        this.frete = frete;
     }
 
 }

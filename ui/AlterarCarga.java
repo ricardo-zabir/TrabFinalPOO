@@ -22,7 +22,7 @@ public class AlterarCarga extends JFrame{
         painelCampos.add(codigoSolicitadoLabel);
         painelCampos.add(codigoSolicitadoField);
 
-        botaoFinal = new JButton("Finalizar ");
+        botaoFinal = new JButton("Fechar ");
         botaoConfirma = new JButton("Confirmar");
 
         GridLayout grid = new GridLayout(4, 1);

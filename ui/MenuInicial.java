@@ -143,6 +143,6 @@ import java.awt.event.ActionListener;
 
     public static void main(String[] args) {
         MenuInicial janela = new MenuInicial();
-        }
+    }
     
 }

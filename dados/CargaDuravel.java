@@ -23,4 +23,5 @@ public class CargaDuravel extends TipoCarga{
     public double getPorcentagemIPI() {
         return porcentagemIPI;
     }
+    
 }

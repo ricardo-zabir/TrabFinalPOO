@@ -76,7 +76,7 @@ public class FormularioCarga extends JFrame{
 
         botaoConfirma = new JButton("Confirmar cadastro");
         botaoLimpa = new JButton("Limpar");
-        botaoFinal = new JButton("Finalizar");
+        botaoFinal = new JButton("Fechar");
         mensagem = new JLabel();
 
         GridLayout grid = new GridLayout(4, 1);
