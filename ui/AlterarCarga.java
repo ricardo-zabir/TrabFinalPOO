@@ -36,7 +36,7 @@ public class AlterarCarga extends JFrame{
         painelCampos.add(novaSituacaoJLabel);
         painelCampos.add(novaSituacaoField);
 
-        botaoFinal = new JButton("Finalizar ");
+        botaoFinal = new JButton("Fechar ");
         botaoConfirma = new JButton("Confirmar");
 
         GridLayout grid = new GridLayout(4, 1);

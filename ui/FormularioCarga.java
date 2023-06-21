@@ -26,13 +26,15 @@ public class FormularioCarga extends JFrame{
     private JButton botaoLimpa;
     private JLabel mensagem;
 
+    private HashSet<Cliente> clientes;
+
     public FormularioCarga(){
         super();
 
         JLabel formTitle = new JLabel("Digite as informações da carga:");
         formTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-        GridLayout gridCampos = new GridLayout(3, 2);
+        GridLayout gridCampos = new GridLayout(2, 2);
         JPanel painelCampos = new JPanel(gridCampos);
         JLabel identificadorLabel = new JLabel("Identificador: ");
         JLabel portoOrigemLabel = new JLabel("Porto de Origem: ");
@@ -73,7 +75,7 @@ public class FormularioCarga extends JFrame{
 
         botaoConfirma = new JButton("Confirmar cadastro");
         botaoLimpa = new JButton("Limpar");
-        botaoFinal = new JButton("Finalizar");
+        botaoFinal = new JButton("Fechar");
         mensagem = new JLabel();
 
         GridLayout grid = new GridLayout(5, 2);
@@ -132,10 +134,11 @@ public class FormularioCarga extends JFrame{
                     int tempoMaximo = Integer.parseInt(tempoMaximoField.getText());
                     String prioridade = prioridadeField.getText();
                     int codigo = Integer.parseInt(codigoClienteField.getText());
-                    Cliente cliente = FormularioCliente.checkCodigo(codigo, clientes);
+                    Cliente cliente = checkCodigo(codigo, clientes);
+
 
                     if (cliente != null) {
-                        SistemaPorto.cadastrarCarga(identificador, portoOrigem, portoDestino, codigo, peso, valorDeclarado, tempoMaximo, tipoCargaNumero, prioridade);
+                        SistemaPorto.cadastrarCarga(identificador, portoOrigem, portoDestino, codigo, peso, valorDeclarado, tempoMaximo, situacao, tipoCarga, prioridade);
                         mensagem.setForeground(Color.GREEN);
                         mensagem.setText("Carga cadastrada com sucesso");
                     } else {
@@ -152,8 +155,4 @@ public class FormularioCarga extends JFrame{
             }
         }
     }
-
-    public static void main(String[] args) {
-        FormularioCarga formCarga= new FormularioCarga();
-        }
 }

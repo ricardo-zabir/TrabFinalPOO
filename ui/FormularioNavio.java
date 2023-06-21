@@ -59,7 +59,7 @@ import java.util.ArrayList;
 
         botaoCONFIRMA = new JButton("Confirmar cadastro");
         botaoLIMPA = new JButton("Limpar");
-        botaoFINAL = new JButton("Finalizar");
+        botaoFINAL = new JButton("Fechar");
         mensagem = new JLabel();
 
         GridLayout grid = new GridLayout(4, 8);

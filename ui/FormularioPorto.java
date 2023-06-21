@@ -29,7 +29,7 @@ public class FormularioPorto extends JFrame {
         botaoConfirmar = new JButton("Confirmar");
         botaoApagar = new JButton("Apagar");
         botaoMostrarPortos = new JButton("Mostrar Portos");
-        botaoSair = new JButton("Sair");
+        botaoSair = new JButton("Fechar");
         JPanel painel = new JPanel();
         painel.setLayout(new FlowLayout());
 
