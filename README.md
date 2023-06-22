@@ -18,7 +18,7 @@ uma mensagem de erro]; coloca a nova carga em uma fila de cargas pendentes; ao
 final mostra na tela os dados da nova carga cadastrada, incluindo os dados da origem
 e destino, cliente e tipo de carga. As cargas são mantidas em ordem crescente de
 código).
-- [ ] Consultar todas as cargas (mostra todas as cargas cadastradas: todos os dados das
+- [x] Consultar todas as cargas (mostra todas as cargas cadastradas: todos os dados das
 cargas, incluindo os dados dos portos de origem e destino, do cliente, do tipo de carga
 e da situação; se a carga possui um navio designado, mostra os dados do navio e o
 valor final do frete [se não há cargas, mostra uma mensagem de erro]).
@@ -40,7 +40,7 @@ cargas pendentes, mostra uma mensagem de erro]).
 - [x] Salvar dados (solicita ao usuário um nome de arquivo (sem extensão) e salva todos
 os dados cadastrados em um ou mais arquivos [se houver algum problema no
 salvamento mostra uma mensagem de erro]).
-- [ ] Carregar dados (solicita ao usuário um nome de arquivo (sem extensão) e carrega
+- [x] Carregar dados (solicita ao usuário um nome de arquivo (sem extensão) e carrega
 todos os dados de um ou mais arquivos [se houver algum problema no carregamento
 mostra uma mensagem de erro]).
 - [x] Finalizar sistema (termina a execução do sistema).
