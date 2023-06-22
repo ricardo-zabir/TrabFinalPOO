@@ -111,7 +111,7 @@ public class InterfaceDados extends JFrame{
                 }
             }
             else if (e.getSource() == botaoCarregarDados) {
-                if (!nomeArquivoField.getText().equals("")) {
+                if(!nomeArquivoField.getText().equals("")) {
                     ArrayList<String> arquivos = new ArrayList<>();
                     arquivos.add("-PORTOS.CSV");
                     arquivos.add("-DISTANCIAS.CSV");
@@ -119,27 +119,46 @@ public class InterfaceDados extends JFrame{
                     arquivos.add("-CLIENTES.CSV");
                     arquivos.add("-TIPOSCARGAS.CSV");
                     arquivos.add("-CARGAS.CSV");
-
                     try {
                         for (String arquivo : arquivos) {
                             switch (arquivo) {
                                 case "-PORTOS.CSV":
-                                    carregarArquivoPortos(nomeArquivoField.getText() + arquivo, sp);
+                                    String portosRetorno = lerPortos(new Scanner(Files.newBufferedReader(Paths.get(nomeArquivoField.getText() + "" + arquivo), Charset.defaultCharset())), sp);
+                                    if(!portosRetorno.equals("")) {
+                                        throw new DataFormatException(portosRetorno);
+                                    }
                                     break;
                                 case "-DISTANCIAS.CSV":
-                                    carregarArquivoDistancia(nomeArquivoField.getText() + arquivo, sp);
+                                    String distanciaRetorno = lerDistancias(new Scanner(Files.newBufferedReader(Paths.get(nomeArquivoField.getText() + "" + arquivo), Charset.defaultCharset())), sp);
+                                    if(!distanciaRetorno.equals("")) {
+                                        throw new DataFormatException(distanciaRetorno);
+                                    }
                                     break;
+                                    
                                 case "-NAVIOS.CSV":
-                                    carregarArquivoNavios(nomeArquivoField.getText() + arquivo, sp);
+                                    String naviosRetorno = lerNavios(new Scanner(Files.newBufferedReader(Paths.get(nomeArquivoField.getText() + "" + arquivo), Charset.defaultCharset())), sp);
+                                    if(!naviosRetorno.equals("")) {
+                                        throw new DataFormatException(naviosRetorno);
+                                    }
                                     break;
+                                    
                                 case "-CLIENTES.CSV":
-                                    carregarArquivoClientes(nomeArquivoField.getText() + arquivo, sp);
+                                    String clientesRetorno = lerClientes(new Scanner(Files.newBufferedReader(Paths.get(nomeArquivoField.getText() + "" + arquivo), Charset.defaultCharset())), sp);
+                                    if(!clientesRetorno.equals("")) {
+                                        throw new DataFormatException(clientesRetorno);
+                                    }
                                     break;
                                 case "-TIPOSCARGAS.CSV":
-                                    carregarArquivoTiposCargas(nomeArquivoField.getText() + arquivo, sp);
+                                    String tiposCargasRetorno = lerTipoDeCarga(new Scanner(Files.newBufferedReader(Paths.get(nomeArquivoField.getText() + "" + arquivo), Charset.defaultCharset())), sp);
+                                    if(!tiposCargasRetorno.equals("")) {
+                                        throw new DataFormatException(tiposCargasRetorno);
+                                    }
                                     break;
                                 case "-CARGAS.CSV":
-                                    carregarArquivoCargas(nomeArquivoField.getText() + arquivo, sp);
+                                    String cargasRetorno = lerCarga(new Scanner(Files.newBufferedReader(Paths.get(nomeArquivoField.getText() + "" + arquivo), Charset.defaultCharset())), sp);
+                                    if(!cargasRetorno.equals("")) {
+                                        throw new DataFormatException(cargasRetorno);
+                                    }
                                     break;
                                 default:
                                     break;
@@ -147,12 +166,28 @@ public class InterfaceDados extends JFrame{
                         }
                         mensagem.setForeground(Color.BLACK);
                         mensagem.setText(portosString(sp));
-                    } catch (Exception ex) {
-                        System.out.println(ex.getMessage());
-                        mensagem.setForeground(Color.RED);
-                        mensagem.setText("Erro ao carregar arquivos: " + ex.getMessage());
+                        // JPanel contentPanel = new JPanel(new GridLayout(1, 4));
+                        // JLabel mensagemPortos = new JLabel();
+                        // mensagemPortos.setForeground(Color.BLACK);
+                        // mensagemPortos.setText(portosString(repo));
+                        // JLabel mensagemNavios = new JLabel();
+                        // JLabel mensagemClientes = new JLabel();
+                        // JLabel mensagemCargas = new JLabel();
+                        // contentPanel.add(mensagemPortos);
+                        // painel.add(contentPanel);
+                        // nomeArquivoField.setText("");
                     }
-                } else {
+                    catch(DataFormatException exc) {
+                        System.out.println(exc.getMessage());
+                        mensagem.setForeground(Color.RED);
+                        mensagem.setText(exc.getMessage());
+                    }
+                    catch(Exception ex) {
+                        mensagem.setForeground(Color.RED);
+                        mensagem.setText("Nome inválido, arquivos não foram encontrados");
+                    }
+                }
+                else {
                     mensagem.setForeground(Color.RED);
                     mensagem.setText("Preencha o campo");
                 }
