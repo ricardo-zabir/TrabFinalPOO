@@ -17,11 +17,13 @@ public class FormularioConsultarCargas extends JFrame {
 
         mensagem = new JLabel();
         JButton botaoFechar = new JButton("Fechar");
+        JPanel botaoPanel = new JPanel(new GridLayout(4, 1));
+        botaoPanel.add(botaoFechar);
         botaoFechar.addActionListener(e -> dispose());
-        mensagem.setText(sc.consultarCargas());
-        JPanel panel = new JPanel(new GridLayout(3,2));
+        mensagem.setText("<html> " + sc.consultarCargas().replace("Carga:Identificador", "<br />Carga: <br /> Id") + " </html>");
+        JPanel panel = new JPanel(new GridLayout(2,1));
         panel.add(mensagem);
-        panel.add(botaoFechar);
+        panel.add(botaoPanel);
         this.add(panel);
     }
 

@@ -191,19 +191,19 @@ public class SistemaPorto {
         for (Carga carga : cargas) {
             msg += "Carga:";
             msg += "Identificador: " + carga.getIdentificador();
-            msg += "Cliente cod: " + carga.getCodigo().getCodigo();
-            msg += "Porto origem cod:  " + carga.getPortoOrigem();
-            msg += "Porto destino cod: " + carga.getPortoDestino();
-            msg += "Peso: " + carga.getPeso();
-            msg += "Valor Declarado: " + carga.getValorDeclarado();
-            msg += "Tempo Máximo: " + carga.getTempoMaximo();
-            msg += "Tipo de Carga: " + carga.getNumero().getDescricao();
-            msg += "Prioridade: " + carga.getPrioridade();
-            msg += "Situação: " + carga.getSituacao();
+            msg += ", cliente cod: " + carga.getCodigo().getCodigo();
+            msg += ", porto origem cod:  " + carga.getPortoOrigem();
+            msg += ", porto destino cod: " + carga.getPortoDestino();
+            msg += ", peso: " + carga.getPeso();
+            msg += ", valor Declarado: " + carga.getValorDeclarado();
+            msg += ", tempo Máximo: " + carga.getTempoMaximo();
+            msg += ", tipo de Carga: " + carga.getNumero().getDescricao();
+            msg += ", prioridade: " + carga.getPrioridade();
+            msg += ", situação: " + carga.getSituacao();
 
             if (carga.getNome() != null) {
-                msg += "Navio Designado: " + carga.getNome().getNome();
-                msg += "Valor do Frete: " + carga.getFrete();
+                msg += ", navio Designado: " + carga.getNome().getNome();
+                msg += ", valor do Frete: " + carga.getFrete();
             }
 
             System.out.println("--------------------");
