@@ -134,21 +134,28 @@ public class FormularioCarga extends JFrame{
                     TipoCarga tc = sp.getTiposCargas().stream().filter(tcc -> tcc.getNumero() == numero).toList().get(0);
 
                     if (cliente != null && tc != null) {
-                        sp.cadastrarCarga(identificador, portoOrigem, portoDestino, cliente, peso, valorDeclarado, tempoMaximo, "PENDENTE", tc, prioridade);
-                        mensagem.setForeground(Color.GREEN);
-                        mensagem.setText("Carga cadastrada com sucesso");
-
-                        // Escrever no arquivo "CARGAS.CSV"
-                        String linha = identificador + "," + portoOrigem + "," + portoDestino + "," + cliente.getCodigo() + ","
+                        try {
+                            sp.getPortos().stream().filter(p -> p.getId() == portoOrigem).toList().get(0);
+                            sp.getPortos().stream().filter(p -> p.getId() == portoDestino).toList().get(0);
+                            sp.cadastrarCarga(identificador, portoOrigem, portoDestino, cliente, peso, valorDeclarado, tempoMaximo, "PENDENTE", tc, prioridade);
+                            mensagem.setForeground(Color.GREEN);
+                            mensagem.setText("Carga cadastrada com sucesso");
+                            String linha = identificador + "," + portoOrigem + "," + portoDestino + "," + cliente.getCodigo() + ","
                                 + peso + "," + valorDeclarado + "," + tempoMaximo + "," + "PENDENTE" + "," + tc.getNumero() + ","
                                 + prioridade;
 
-                        try (BufferedWriter writer = new BufferedWriter(new FileWriter("CARGAS.CSV", true))) {
-                            writer.write(linha);
-                            writer.newLine();
-                        } catch (IOException ex) {
-                            JOptionPane.showMessageDialog(null, "Erro ao escrever no arquivo.");
+                            try (BufferedWriter writer = new BufferedWriter(new FileWriter("CARGAS.CSV", true))) {
+                                writer.write(linha);
+                                writer.newLine();
+                            } catch (IOException ex) {
+                                JOptionPane.showMessageDialog(null, "Erro ao escrever no arquivo.");
+                            }
                         }
+                        catch (IndexOutOfBoundsException i) {
+                            mensagem.setForeground(Color.RED);
+                            mensagem.setText("Favor inserir portos que existam");
+                        }
+                    
                     } else {
                         mensagem.setForeground(Color.RED);
                         mensagem.setText("Erro, cliente não encontrado");

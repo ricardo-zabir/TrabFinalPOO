@@ -118,7 +118,7 @@ public class SistemaPorto {
             }
         }
 
-        Navio novoNavio = new Navio(nome, velocidade, autonomia, custoMilhaBasico, 0, "");
+        Navio novoNavio = new Navio(nome, velocidade, autonomia, custoMilhaBasico, 0, "LIBERADO");
 
         // Encontra a posição onde o navio deve ser inserido para manter a ordem crescente de nome
         int posicaoInsercao = 0;

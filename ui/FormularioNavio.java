@@ -99,7 +99,7 @@ import java.util.ArrayList;
                         double autonomia = Double.parseDouble(autonomiaField.getText());
                         double custoPorMilhaBasico = Double.parseDouble(custoMilhaField.getText());
                         int capacidade = 0;
-                        String status = null;
+                        String status = "LIBERADO";
                         Navio navio = new Navio(nome, velocidade, autonomia, custoPorMilhaBasico, capacidade, status);
                         if (CadastraNavio(navio)) {
                             mensagem.setForeground(Color.BLUE);
@@ -131,7 +131,7 @@ import java.util.ArrayList;
     public boolean CadastraNavio(Navio navio){
         for(int i=0; i<navios.size(); i++){
             Navio aux = navios.get(i);
-            if(aux.getNome().equals(navio.getNome())){return false;}
+            if(aux.getNome().toLowerCase().equals(navio.getNome().toLowerCase(getLocale()))){return false;}
         }
         navios.add(navio);
         return true;

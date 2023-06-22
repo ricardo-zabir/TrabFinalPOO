@@ -73,8 +73,13 @@ public class FormularioAlterarCarga extends JFrame{
             }
             else if(e.getSource() == botaoConfirma){
                 int codigoCarga = Integer.parseInt(codigoSolicitadoField.getText());
-                String novaSituacao = novaSituacaoField.getText();
+                String novaSituacao = novaSituacaoField.getText().toUpperCase();
                 ArrayList<Carga> cargas = sp.getCargas();
+                ArrayList<String> situations = new ArrayList<>();
+                situations.add("PENDENTE");
+                situations.add("CANCELADO");
+                situations.add("LOCADO");
+                situations.add("FINALIZADO");
                 Carga carga = null;
                 for (Carga c : cargas) {
                     if (c.getIdentificador() == codigoCarga) {
@@ -92,6 +97,10 @@ public class FormularioAlterarCarga extends JFrame{
                     mensagem.setForeground(Color.RED);
                     mensagem.setText("Erro: A carga já está na situação FINALIZADO e não pode ser alterada.");
                     return;
+                }
+                else if(!situations.contains(novaSituacao)) {
+                    mensagem.setForeground(Color.RED);
+                    mensagem.setText("Erro: Situação nova deve ser uma entre: PENDENTE, CANCELADO, LOCADO OU FINALIZADO");
                 }
                 else{
         
