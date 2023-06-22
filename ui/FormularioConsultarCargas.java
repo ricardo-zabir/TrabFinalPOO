@@ -6,10 +6,10 @@ import dados.SistemaPorto;
 
 import java.awt.*;
 
-public class ConsultarCargas extends JFrame {
+public class FormularioConsultarCargas extends JFrame {
     private JLabel mensagem;
     private SistemaPorto sc;
-    public ConsultarCargas(SistemaPorto repo) {
+    public FormularioConsultarCargas(SistemaPorto repo) {
         sc = repo;
         setTitle("Consultar cargas");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

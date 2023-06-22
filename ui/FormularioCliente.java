@@ -133,8 +133,8 @@ public class FormularioCliente extends JFrame {
         FlowLayout botaoLayout = new FlowLayout(FlowLayout.RIGHT);
         JPanel botaoPainel = new JPanel(botaoLayout);
         botaoPainel.add(botao);
-        botaoPainel.add(fecharBotao);
         botaoPainel.add(limparBotao);
+        botaoPainel.add(fecharBotao);
         painel.add(botaoPainel);
         painel.add(mensagem);
         this.setTitle("Formulario - Cliente");

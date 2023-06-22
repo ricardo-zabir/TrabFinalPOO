@@ -102,21 +102,21 @@ import java.awt.event.ActionListener;
             }
             else if(e.getSource() == botaoCadastroTipoCarga)
             {
-              FormularioTipoCarga formularioTipoCarga = new FormularioTipoCarga(sp);
-              formularioTipoCarga.setVisible(true);
+                FormularioTipoCarga formularioTipoCarga = new FormularioTipoCarga(sp);
+                formularioTipoCarga.setVisible(true);
             }
             else if (e.getSource() == botaoConsultaCarga) {
-                ConsultarCarga consultarCargas = new ConsultarCarga(sp);
-                consultarCargas.setVisible(true);
+                
             }
             else if(e.getSource() == botaoAlterarCarga)
             {
-              AlterarCarga alterarCarga = new AlterarCarga(sp);
+              FormularioAlterarCarga alterarCarga = new FormularioAlterarCarga(sp);
               alterarCarga.setVisible(true);
             }
             else if(e.getSource() == botaoFretarCarga)
             {
-              
+              FormularioFretarCarga fretarCarga = new FormularioFretarCarga(sp);
+              fretarCarga.setVisible(true);
             }
             else if(e.getSource() == botaoEntradaSaidaDeDados)
             {

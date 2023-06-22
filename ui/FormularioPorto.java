@@ -107,6 +107,13 @@ public class FormularioPorto extends JFrame {
             }
         });
 
+        botaoSair.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+
         botaoMostrarPorto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

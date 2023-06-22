@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class AlterarCarga extends JFrame{
+public class FormularioAlterarCarga extends JFrame{
     private JTextField codigoSolicitadoField;
     private JTextField novaSituacaoField;
     private JButton botaoFinal;
@@ -19,7 +19,7 @@ public class AlterarCarga extends JFrame{
     private JLabel mensagem2;
     private SistemaPorto sp;
 
-    public AlterarCarga(SistemaPorto repo) {
+    public FormularioAlterarCarga(SistemaPorto repo) {
         super();
         sp = repo;
         GridLayout gridCampos = new GridLayout(2, 2);
@@ -44,8 +44,8 @@ public class AlterarCarga extends JFrame{
         painel.add(painelCampos);
         FlowLayout botaoLayout = new FlowLayout(FlowLayout.RIGHT);
         JPanel botaoPainel = new JPanel(botaoLayout);
-        botaoPainel.add(botaoFinal);
         botaoPainel.add(botaoConfirma);
+        botaoPainel.add(botaoFinal);
         painel.add(botaoPainel);
         painel.add(mensagem);
         painel.add(mensagem2);
